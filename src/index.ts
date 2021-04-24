@@ -1,4 +1,1 @@
-console.log('Hello world!');
-console.log(123+321);
-console.log(7357);
-
+console.log('Hello world!'+3+3);
