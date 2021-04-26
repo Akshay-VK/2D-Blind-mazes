@@ -16,9 +16,9 @@ export class Canvas{
     this.columns = columns;
 
     //setting default value of canvas as black (0)
-    this.canvas = [];
+    this.canvas = new Array<Array<Color>>();
     for(let y = 0; y < this.rows;y++){
-      this.canvas[y] = [];
+      this.canvas[y] = new Array<Color>();
 
       for(let x = 0; x < this.columns;x++){
 
