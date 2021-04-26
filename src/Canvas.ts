@@ -16,16 +16,16 @@ export class Canvas{
     this.columns = columns;
 
     //setting default value of canvas as black (0)
-    this.canvas[0][0] = new Color();
-    // for(let y = 0; y < this.rows;y++){
+    this.canvas = [];
+    for(let y = 0; y < this.rows;y++){
+      this.canvas[y] = [];
 
-    //   for(let x = 0; x < this.columns;x++){
-    //     console.log(x,y);
+      for(let x = 0; x < this.columns;x++){
 
-    //     this.canvas[x][y] = new Color();
+        this.canvas[x][y] = new Color();
 
-    //   }      
-    // }
+      }      
+    }
   }
   //setColorVALS is to set the color value of the canvas pixels without replacing them
   setColorVals(arg: Array<Array<number>>){
