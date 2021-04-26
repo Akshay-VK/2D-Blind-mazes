@@ -5,7 +5,6 @@ export class Color{
         if(color){
             //chacking if the value specified is within the color range
             if(color >= 0 && color <= 255){
-                console.log('check1');
                 this.color = color;
             }
             else{
