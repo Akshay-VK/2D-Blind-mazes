@@ -3,7 +3,7 @@ import { Color } from "./util/Color";
 export class Canvas{
 
 
-  canvas: Color[][];
+  canvas: Color[];
   rows: number;
   columns: number;
   cellSize: number;
@@ -16,39 +16,38 @@ export class Canvas{
     this.columns = columns;
 
     //setting default value of canvas as black (0)
-    this.canvas = new Array<Array<Color>>();
+    this.canvas = new Array<Color>(rows*columns);
+    //test
+    var counter: number = 0;
     for(let y = 0; y < this.rows;y++){
-      let row:Color[] = new Array<Color>();
-
       for(let x = 0; x < this.columns;x++){
-
-        row.push(new Color(127));
-
-      }
-      this.canvas.push(row);   
+        this.canvas[this.getIndex(x,y)] = new Color(counter);
+        //test
+        counter = x%256;
+      } 
     }
   }
   //setColorVALS is to set the color value of the canvas pixels without replacing them
-  setColorVals(arg: Array<Array<number>>){
+  setColorVals(arg: Array<number>){
 
       for(var y = 0; y < this.rows; y++){
 
         for(var x = 0; x < this.columns; x++){
 
-          this.canvas[x][y].setColorVal(arg[x][y]);
+          this.canvas[this.getIndex(x,y)].setColorVal(arg[this.getIndex(x,y)]);
 
         }      
       }
 
   }
   //setCOLOR on the other hand replaces the canvas with the specified array of colors
-  setColors(arg: Array<Array<Color>>){
+  setColors(arg: Array<Color>){
 
     for(var y = 0; y < this.rows;y++){
 
       for(var x = 0; x < this.columns;x++){
 
-        this.canvas[x][y] = arg[x][y];
+        this.canvas[this.getIndex(x,y)] = arg[this.getIndex(x,y)];
         
       }      
     }
@@ -61,7 +60,12 @@ export class Canvas{
 
       for(var x = 0; x < this.columns;x++){
 
-        var val: number = this.canvas[x][y].getColorVal();
+        var pixel: Color = this.canvas[this.getIndex(x,y)];
+        //console.log(this.canvas);
+        //console.log(pixel);
+        //console.log(pixel.getColorVal());
+
+        var val: number = pixel.getColorVal();
 
         ctx.fillStyle = `rgba(${val},${val},${val})`;
         ctx.fillRect(x*this.cellSize, y*this.cellSize, this.cellSize,this.cellSize);
@@ -83,5 +87,9 @@ export class Canvas{
 
   public getCanvasCellSize(): number{
     return this.cellSize;
+  }
+  public getIndex(x: number,y: number): number{
+    let index: number = y * this.columns + x;
+    return index;
   }
 }
