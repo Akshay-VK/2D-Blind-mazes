@@ -1,4 +1,4 @@
-import { Color } from "./util/Color";
+import { Color } from "../util/Color";
 
 export class Canvas{
 
@@ -23,7 +23,7 @@ export class Canvas{
       for(let x = 0; x < this.columns;x++){
         this.canvas[this.getIndex(x,y)] = new Color(counter);
         //test
-        counter = x%256;
+        counter = (x+y)%2*255;
       } 
     }
   }
@@ -67,8 +67,12 @@ export class Canvas{
 
         var val: number = pixel.getColorVal();
 
-        ctx.fillStyle = `rgba(${val},${val},${val})`;
-        ctx.fillRect(x*this.cellSize, y*this.cellSize, this.cellSize,this.cellSize);
+        if(val == 0){
+          ctx.fillStyle = 'black';
+        }else{
+          ctx.fillStyle = `rgba(${val},${val},${val},255)`;
+        }        
+        ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize,this.cellSize);
         
       }      
     } 

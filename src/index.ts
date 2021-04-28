@@ -1,12 +1,12 @@
-import { Canvas } from "./canvas";
+import { Canvas } from "./screen/Canvas";
 
 //SETUP
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
-const WIDTH: number = 800;
-const HEIGHT: number = 600;
-const CELLSIZE: number = 10;
+const CELLSIZE: number = 20;
+const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
+const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
 
 ctx.canvas.width = WIDTH;
 ctx.canvas.height = HEIGHT;
@@ -20,7 +20,7 @@ function main(){
 
   //_______BACKGROUND_________
   //--------------------------//
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = 'rgba(0,0,0,255)';
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
   //--------------------------//
 
