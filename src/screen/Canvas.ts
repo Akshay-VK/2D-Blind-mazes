@@ -3,10 +3,10 @@ import { Color } from "../util/Color";
 export class Canvas{
 
 
-  canvas: Color[];
-  rows: number;
-  columns: number;
-  cellSize: number;
+  private canvas: Color[];
+  private rows: number;
+  private columns: number;
+  private cellSize: number;
 
   constructor(rows: number, columns: number, cellSize: number){
     //setting vars
@@ -39,6 +39,23 @@ export class Canvas{
         }      
       }
 
+  }
+  //sets individual color VALUES
+  setColorVal(x: number, y: number, val: number){
+    if(x >= 0 && x <= this.columns){
+      if(y >= 0 && y <= this.rows){
+        this.canvas[this.getIndex(x,y)].setColorVal(val);
+      }
+    }
+  }
+
+  //sets individual colors
+  setColor(x: number, y: number, color: Color){
+    if(x >= 0 && x <= this.columns){
+      if(y >= 0 && y <= this.rows){
+        this.canvas[this.getIndex(x,y)] = color;
+      }
+    }
   }
   //setCOLOR on the other hand replaces the canvas with the specified array of colors
   setColors(arg: Array<Color>){
@@ -96,4 +113,16 @@ export class Canvas{
     let index: number = y * this.columns + x;
     return index;
   }
+
+  //-------------------------------------
+  //----------------RESET----------------
+  //-------------------------------------
+  public resetColors(){
+    for(var y = 0; y < this.columns; y++){
+      for(var x = 0; x < this.rows;x++){
+        this.canvas[this.getIndex(x,y)].setColorVal(0);
+      }
+    }
+  }
+
 }

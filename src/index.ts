@@ -4,7 +4,7 @@ import { Canvas } from "./screen/Canvas";
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
-const CELLSIZE: number = 20;
+const CELLSIZE: number = 10;
 const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
 const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
 
