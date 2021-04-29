@@ -35,23 +35,19 @@ export class mazeGenerator{
             this.size = screenHeight;
         }
 
-        // //checkingif innermaze is possible
-        // var tester: number = (this.size-1)/2;
-        // if(tester - Math.floor(tester) != 0){
-        //     //decimal place
-        //     this.size -= 1;
-        // }
+         //checkingif innermaze is possible
+         var tester: number = (this.size-cellSize)/2;
+         if(tester - Math.floor(tester) != 0){
+             //decimal place
+             teser = (this.size-1-cellSize)/2;
+         }
 
-        // //making sure size is divisible by cellSize
-        // if(this.size % cellSize != 0){
-        //     this.size -= this.size%cellSize;
-        // }
-        while((this.size-1)/2 - Math.floor((this.size-1)/2) != 0 && this.size % cellSize != 0 && this.size > 0){
-            this.size--;
-            if(this.size == 0){
-                console.log('00000000000');
-            }
-        }
+         //making sure size is divisible by cellSize
+         if(tester % cellSize != 0){
+             tester -= tester%cellSize;
+         }
+         this.size= (tester*2)+cellSize;
+        
 
 
         this.size /= cellSize;
