@@ -2,16 +2,12 @@
 export class Color{
     private color: number;
     constructor(color?: number){
-        if(color){
-            //chacking if the value specified is within the color range
-            if(color >= 0 && color <= 255){
-                this.color = color;
-            }
-            else{
-                console.log("Color value specified exceeds bounds.");
-            }
-        }else{
-            this.color = 127;
+        //chacking if the value specified is within the color range
+        if(color >= 0 && color <= 255){
+            this.color = color;
+        }
+        else{
+            console.log("Color value specified exceeds bounds.");
         }
     }
     //get the VALUE of the color
