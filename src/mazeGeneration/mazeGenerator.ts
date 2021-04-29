@@ -9,8 +9,10 @@ export class mazeGenerator{
         this.cellSize = cellSize;
 
         this.determineMazeResolution(screenWidth,screenHeight,cellSize);
+        console.log(screenWidth,screenHeight,this.size);
 
         this.maze = new Array<Cell>(this.size*this.size);
+        
         this.generatedMaze = new Array<Cell>((this.size-1)/2);
     }
 
@@ -33,17 +35,25 @@ export class mazeGenerator{
             this.size = screenHeight;
         }
 
-        //making sure size is divisible by cellSize
-        if(this.size % cellSize != 0){
-            this.size -= this.size%cellSize;
+        // //checkingif innermaze is possible
+        // var tester: number = (this.size-1)/2;
+        // if(tester - Math.floor(tester) != 0){
+        //     //decimal place
+        //     this.size -= 1;
+        // }
+
+        // //making sure size is divisible by cellSize
+        // if(this.size % cellSize != 0){
+        //     this.size -= this.size%cellSize;
+        // }
+        while((this.size-1)/2 - Math.floor((this.size-1)/2) != 0 && this.size % cellSize != 0 && this.size > 0){
+            this.size--;
+            if(this.size == 0){
+                console.log('00000000000');
+            }
         }
 
-        //checkingif innermaze is possible
-        var tester: number = (this.size-1)/2;
-        if(tester - Math.floor(tester) != 0){
-            //decimal place
-            this.size -= 1;
-        }
+
         this.size /= cellSize;
     }
 }

@@ -1,3 +1,4 @@
+import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
 import { Canvas } from "./screen/Canvas";
 
 //SETUP
@@ -14,6 +15,10 @@ ctx.canvas.height = HEIGHT;
 
 //VARIABLES
 var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+
+//TESTS ONLY
+var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
+console.log(mazeGen.size);
 
 function main(){
   //MAIN CODE HERE
