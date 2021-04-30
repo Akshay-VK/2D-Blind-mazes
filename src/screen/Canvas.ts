@@ -64,7 +64,7 @@ export class Canvas{
 
       for(var x = 0; x < this.columns;x++){
 
-        this.canvas[this.getIndex(x,y)] = arg[this.getIndex(x,y)];
+        this.setColor(x,y,arg[this.getIndex(x,y)]);
         
       }      
     }
@@ -78,9 +78,6 @@ export class Canvas{
       for(var x = 0; x < this.columns;x++){
 
         var pixel: Color = this.canvas[this.getIndex(x,y)];
-        //console.log(this.canvas);
-        //console.log(pixel);
-        //console.log(pixel.getColorVal());
 
         var val: number = pixel.getColorVal();
 
@@ -112,6 +109,14 @@ export class Canvas{
   public getIndex(x: number,y: number): number{
     let index: number = y * this.columns + x;
     return index;
+  }
+  public getColors(): Array<Color>{
+    return this.canvas;
+  }
+  public getColorVal(x: number,y: number): number{
+    if(x >=0 && x < this.columns && y >= 0 && y < this.rows){
+      return this.canvas[this.getIndex(x,y)].getColorVal();
+    }
   }
 
   //-------------------------------------
