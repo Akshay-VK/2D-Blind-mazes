@@ -40,6 +40,7 @@ export class LightSheet {
             for (var x = 0; x < this.columns; x++) {
               //    add colour equal to their distance from light clamped to 255 
               //    multiplied by brightness of light
+              console.log('came here?');
               this.lightCanvas.setColorVal(
                 x,
                 y,
@@ -80,6 +81,7 @@ export class LightSheet {
     if (x >= 0 && x <= this.columns) {
       if (y >= 0 && y <= this.rows) {
         this.lights[this.getIndex(x, y)] = light;
+        this.lights[this.getIndex(x, y)].determineEmission();
       }
     }
     this.recalculateLights();
@@ -94,6 +96,7 @@ export class LightSheet {
       }
     }
   }
+
   render(ctx: CanvasRenderingContext2D): void {
     for(var y = 0; y < this.rows;y++){
 

@@ -21,8 +21,15 @@ export class Light{
                 this.emissive = false;
             }
         }else{
-            console.log('Error: Invalid light strength.')
-            throw new Error("Invalid light strength.")
+            //console.log('Error: Invalid light strength.Managed.');
+            this.birghtnessValue = this.clampBrightness(birghtnessValue);
+            //checking if light is emissive or not
+            if(this.birghtnessValue != 0){
+                this.emissive = true;
+
+            }else{
+                this.emissive = false;
+            }
         }
     }
     setEmissive(){
@@ -47,6 +54,14 @@ export class Light{
     addBrightnessVal(val: number){
         this.birghtnessValue += val;
         this.birghtnessValue = this.clampBrightness(this.birghtnessValue);
+    }
+    public determineEmission(){
+        if(this.birghtnessValue != 0){
+            this.emissive = true;
+
+        }else{
+            this.emissive = false;
+        }
     }
 
     //GETTERS & SETTERS
