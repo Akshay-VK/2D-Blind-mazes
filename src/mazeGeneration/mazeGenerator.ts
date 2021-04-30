@@ -1,19 +1,24 @@
 import { Cell } from "../util/Cell";
+import { Vector } from "../util/Vector";
 
 export class mazeGenerator{
     maze: Array<Cell>;
     generatedMaze: Array<Cell>;
-    size:number;
+    size:Vector;
     cellSize:number;
     constructor(screenWidth: number,screenHeight: number, cellSize: number){
+        //init
+        this.size = new Vector(0,0);
         this.cellSize = cellSize;
 
         this.determineMazeResolution(screenWidth,screenHeight,cellSize);
-        console.log(screenWidth,screenHeight,this.size);
 
-        this.maze = new Array<Cell>(this.size*this.size);
+        this.maze = new Array<Cell>(this.size.getX()*this.size.getY());
         
-        this.generatedMaze = new Array<Cell>((this.size-1)/2);
+        this.generatedMaze = new Array<Cell>(
+                ((this.size.getX()/2)-cellSize)*
+                ((this.size.getY()/2)-cellSize)
+            );
     }
 
 
@@ -27,29 +32,28 @@ export class mazeGenerator{
     }
 
     //function to determine the resolution of the maze
-    private determineMazeResolution(screenWidth: number, screenHeight: number, cellSize: number){
-        //determining main resolution
-        if(screenHeight >= screenWidth){
-            this.size = screenWidth;
-        }else{
-            this.size = screenHeight;
+    private determineMazeResolution(screenWidth: number, screenHeight: number, cellSize: number){        
+        //WIDTH CALCULATIONS
+        if(screenWidth % cellSize != 0){
+            screenWidth = screenWidth - screenWidth % cellSize;            
+        }
+        //innerMaze calculations
+        if(((screenWidth/cellSize)/2)-1 - Math.floor(((screenWidth/cellSize)/2)-1) != 0){
+            screenWidth -= cellSize;
         }
 
-         //checkingif innermaze is possible
-         var tester: number = (this.size-cellSize)/2;
-         if(tester - Math.floor(tester) != 0){
-             //decimal place
-             teser = (this.size-1-cellSize)/2;
-         }
+        //HEIGHT CALCULATIONS
+        if(screenHeight % cellSize != 0){
+            screenHeight = screenHeight - screenHeight % cellSize;            
+        }
+        //innerMaze calculations
+        if(((screenHeight/cellSize)/2)-1 - Math.floor(((screenHeight/cellSize)/2)-1) != 0){
+            screenHeight -= cellSize;
+        }
 
-         //making sure size is divisible by cellSize
-         if(tester % cellSize != 0){
-             tester -= tester%cellSize;
-         }
-         this.size= (tester*2)+cellSize;
+        //FINAL ASSIGNING
+        this.size.setX(screenWidth / cellSize);
+        this.size.setY(screenHeight / cellSize);
         
-
-
-        this.size /= cellSize;
     }
 }
