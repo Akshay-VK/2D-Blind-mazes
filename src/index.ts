@@ -15,15 +15,17 @@ ctx.canvas.height = HEIGHT;
 //_________________________
 
 //VARIABLES
-var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE, false);
 var PLAYING: boolean = false;
 
 //TESTS ONLY
 // var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 // console.log(mazeGen.size);
 
-var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE, 2);
 lightSheet.setLight(new Vector(20,20),10);
+lightSheet.setLight(new Vector(60,60),10);
+
 lightSheet.calculateLightEffects();
 PLAYING = true;
 
@@ -37,7 +39,8 @@ function main(){
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     //--------------------------//
 
-    canvas.render(ctx);
+    //canvas.render(ctx);
+    lightSheet.render(ctx);
 
 
 

@@ -8,7 +8,7 @@ export class Canvas{
   private columns: number;
   private cellSize: number;
 
-  constructor(rows: number, columns: number, cellSize: number){
+  constructor(rows: number, columns: number, cellSize: number, blackout:boolean){
     //setting vars
     this.cellSize = cellSize;
 
@@ -21,7 +21,11 @@ export class Canvas{
     var counter: number = 0;
     for(let y = 0; y < this.rows;y++){
       for(let x = 0; x < this.columns;x++){
-        this.canvas[this.getIndex(x,y)] = new Color(counter);
+        if(blackout){
+          this.canvas[this.getIndex(x,y)] = new Color(0);
+        }else{
+          this.canvas[this.getIndex(x,y)] = new Color(counter);
+        }
         //test
         counter = (x+y)%2*255;
       } 

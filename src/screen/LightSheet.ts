@@ -9,13 +9,16 @@ export class LightSheet{
 
     public maxDistanceFromLight: number;
 
+    public lightIntensity: number;
+
     lights: Light[];
     lightCanvas: Canvas;
-    constructor(rows: number, columns: number, cellSize: number){
-        this.lightCanvas = new Canvas(rows, columns, cellSize);
+    constructor(rows: number, columns: number, cellSize: number, lightIntensity: number){
+        this.lightCanvas = new Canvas(rows, columns, cellSize, true);
         this.rows = rows;
         this.columns = columns;
         this.cellSize = cellSize;
+        this.lightIntensity = lightIntensity
 
         this.maxDistanceFromLight = Math.sqrt(this.columns*this.columns+this.rows*this.rows);
 
@@ -51,7 +54,7 @@ export class LightSheet{
             var lightLuminanceValue: number = this.lights[i].getLuminanceValue();
             var minLuminanceValue = this.lights[i].getMinLuminanceValue();
             var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
-            var lightPercentage: number = lightLuminanceValue-minLuminanceValue / maxLuminanceValue-minLuminanceValue;
+            var lightPercentage: number = (lightLuminanceValue-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
 
 
             var lightX: number = this.lights[i].getPositionX();
@@ -64,8 +67,14 @@ export class LightSheet{
                         (y-lightY)*(y-lightY)
                         );
                     var distanceOverMaxDistanceFactor: number = distanceFromLight / this.maxDistanceFromLight;
-                    this.lightCanvas.setColorVal(x,y,
-                        distanceOverMaxDistanceFactor*lightPercentage*255);
+                    var finalValue: number = this.lightCanvas.getColorVal(x,y)+(255-(this.lightIntensity*distanceOverMaxDistanceFactor*lightPercentage*255));
+                    
+                    // if(finalValue < 0){
+                    //     finalValue = 0;
+                    // }else if(finalValue > 255){
+                    //     finalValue = 255;
+                    // }
+                    this.lightCanvas.setColorVal(x,y,finalValue);
                 }
             }
         }
