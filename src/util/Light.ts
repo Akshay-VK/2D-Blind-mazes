@@ -1,78 +1,50 @@
+import { Vector } from "./Vector";
+
 export class Light{
-    
-    private birghtnessValue: number;
-    public min;
-    public max;
-    public emissive: boolean;
-    constructor(birghtnessValue: number){
-        //set min and maxvrightness values here...
-        this.min = 1;
-        this.max = 10;
-        //---------------
-        
+    private position: Vector;
+    private luminanceValue: number;
+    constructor(position: Vector, luminanceValue: number){
+        this.position = position;
 
-        if(birghtnessValue > 0 && birghtnessValue < 11){
-            this.birghtnessValue = birghtnessValue;
-            //checking if light is emissive or not
-            if(birghtnessValue != 0){
-                this.emissive = true;
-
-            }else{
-                this.emissive = false;
-            }
+        if(luminanceValue >= 0 && luminanceValue <= 10){
+            this.luminanceValue = luminanceValue;
         }else{
-            //console.log('Error: Invalid light strength.Managed.');
-            this.birghtnessValue = this.clampBrightness(birghtnessValue);
-            //checking if light is emissive or not
-            if(this.birghtnessValue != 0){
-                this.emissive = true;
-
-            }else{
-                this.emissive = false;
-            }
+            throw new Error("Invalid light luminance value specified.");
         }
     }
-    setEmissive(){
-        this.emissive = true;
-    }
-    setNonEmissive(){
-        this.emissive = false;
 
-    }
-    switchEmissionState(){
-        this.emissive = !this.emissive;
-    }
-    clampBrightness(val: number){
-        if(val < this.min){
-            return 1;
-        }
-        if(val > this.max){
-            return 10;
-        }
-        return val;
-    }
-    addBrightnessVal(val: number){
-        this.birghtnessValue += val;
-        this.birghtnessValue = this.clampBrightness(this.birghtnessValue);
-    }
-    public determineEmission(){
-        if(this.birghtnessValue != 0){
-            this.emissive = true;
+    //GETTERS
 
+    //POSITIONS
+    public getPosition(): Vector{
+        return this.position;
+    }
+    public getPositionX(): number{
+        return this.position.getX();
+    }
+    public getPositionY(): number{
+        return this.position.getY();
+    }    
+    public getLuminanceValue(): number{
+        return this.luminanceValue;
+    }
+
+    //SETTERS
+    public setPosition(vec: Vector){
+        this.position.setX(vec.getX());
+        this.position.setY(vec.getY());        
+    }
+    public setPositionX(x: number){
+        this.position.setX(x);
+    }
+    public setPositionY(y: number){
+        this.position.setY(y);
+    }
+    public setLuminanceValue(val: number){
+        if(val >= 0 && val <= 10){
+            this.luminanceValue = val;
         }else{
-            this.emissive = false;
+            throw new Error("Invalid light luminance value specified while setting.");
         }
-    }
-
-    //GETTERS & SETTERS
-    public getBrightnessValue(): number{
-        return this.birghtnessValue;
-    }
-    public setBrightnessValue(val: number){
-        if(val != this.clampBrightness(val)){
-            console.log('Error: Unclamped brightness value specified.');
-            return;
-        }
-        this.birghtnessValue = val;
     }
 }
