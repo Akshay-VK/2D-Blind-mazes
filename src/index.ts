@@ -1,7 +1,6 @@
 import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
 import { Canvas } from "./screen/Canvas";
 import { LightSheet } from "./screen/LightSheet";
-import { Light } from "./util/Light";
 import { Vector } from "./util/Vector";
 //SETUP
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
@@ -17,28 +16,36 @@ ctx.canvas.height = HEIGHT;
 
 //VARIABLES
 var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+var PLAYING: boolean = false;
 
 //TESTS ONLY
 // var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 // console.log(mazeGen.size);
 
+var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+lightSheet.setLight(new Vector(20,20),10);
+lightSheet.calculateLightEffects();
+PLAYING = true;
+
 function main(){
-  //MAIN CODE HERE
+  if(PLAYING){
+    //MAIN CODE HERE
 
-  //_______BACKGROUND_________
-  //--------------------------//
-  ctx.fillStyle = 'rgba(0,0,0,255)';
-  ctx.fillRect(0, 0, WIDTH, HEIGHT);
-  //--------------------------//
+    //_______BACKGROUND_________
+    //--------------------------//
+    ctx.fillStyle = 'rgba(0,0,0,255)';
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    //--------------------------//
 
-  canvas.render(ctx);
-
-
-
+    canvas.render(ctx);
 
 
-  requestAnimationFrame(main);
 
+
+
+    requestAnimationFrame(main);
+
+  }
 }
 
 requestAnimationFrame(main);

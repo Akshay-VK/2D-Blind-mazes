@@ -3,10 +3,15 @@ import { Vector } from "./Vector";
 export class Light{
     private position: Vector;
     private luminanceValue: number;
+    private maxLuminanceValue: number;
+    private minLuminanceValue: number;
+    
     constructor(position: Vector, luminanceValue: number){
         this.position = position;
+        this.minLuminanceValue = 0;
+        this.maxLuminanceValue = 10;
 
-        if(luminanceValue >= 0 && luminanceValue <= 10){
+        if(luminanceValue >= this.minLuminanceValue && luminanceValue <= this.maxLuminanceValue){
             this.luminanceValue = luminanceValue;
         }else{
             throw new Error("Invalid light luminance value specified.");
@@ -28,6 +33,14 @@ export class Light{
     public getLuminanceValue(): number{
         return this.luminanceValue;
     }
+
+    public getMinLuminanceValue(): number{
+        return this.minLuminanceValue;
+    }
+    public getMaxLuminanceValue(): number{
+        return this.maxLuminanceValue;
+    }
+    
 
     //SETTERS
     public setPosition(vec: Vector){
