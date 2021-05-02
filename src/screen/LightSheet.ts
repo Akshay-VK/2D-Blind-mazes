@@ -39,7 +39,8 @@ export class LightSheet{
     //NOT GETTERS OR SETTERS 🤣
     public setLight(vec: Vector,luminanceValue: number){
         this.lights.push(new Light(vec,luminanceValue));
-        console.log(this.lights);
+        this.calculateLightEffects();        
+        console.log(this.lightCanvas);
     }
 
     //----------------------------------------------------------------
@@ -54,7 +55,7 @@ export class LightSheet{
             var lightLuminanceValue: number = this.lights[i].getLuminanceValue();
             var minLuminanceValue = this.lights[i].getMinLuminanceValue();
             var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
-            var lightPercentage: number = (lightLuminanceValue-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
+            var lightPercentage: number = (maxLuminanceValue+lightLuminanceValue-minLuminanceValue) / ((maxLuminanceValue-minLuminanceValue));
 
 
             var lightX: number = this.lights[i].getPositionX();
@@ -66,14 +67,14 @@ export class LightSheet{
                         (x-lightX)*(x-lightX)+
                         (y-lightY)*(y-lightY)
                         );
-                    var distanceOverMaxDistanceFactor: number = distanceFromLight / this.maxDistanceFromLight;
-                    var finalValue: number = this.lightCanvas.getColorVal(x,y)+(255-(this.lightIntensity*distanceOverMaxDistanceFactor*lightPercentage*255));
+                    var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*.25);
+                    var finalValue: number = this.lightCanvas.getColorVal(x,y)+(this.lightIntensity*distanceOverMaxDistanceFactor*lightPercentage*255);
                     
-                    // if(finalValue < 0){
-                    //     finalValue = 0;
-                    // }else if(finalValue > 255){
-                    //     finalValue = 255;
-                    // }
+                    if(finalValue < 0){
+                        finalValue = 0;
+                    }else if(finalValue > 255){
+                        finalValue = 255;
+                    }
                     this.lightCanvas.setColorVal(x,y,finalValue);
                 }
             }
@@ -82,8 +83,13 @@ export class LightSheet{
     //----------------------------------------------------------------
     //----------------------------------------------------------------
 
+    public switchFirst(vec: Vector, luminance){
+        this.lights.splice(0,1,new Light(vec,luminance));
+        this.calculateLightEffects();
+    }
+
     public render(ctx: CanvasRenderingContext2D){
-        this.lightCanvas.render(ctx);
+        this.lightCanvas.render(ctx,true);
     }
 
     //SETTERS

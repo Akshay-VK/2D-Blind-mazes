@@ -76,7 +76,7 @@ export class Canvas{
   }
 
   //method for renderring the pixels/colors to the screen
-  render(ctx: CanvasRenderingContext2D){
+  render(ctx: CanvasRenderingContext2D, invert?:boolean){
     for(var y = 0; y < this.rows;y++){
 
       for(var x = 0; x < this.columns;x++){
@@ -89,7 +89,12 @@ export class Canvas{
           ctx.fillStyle = 'black';
         }else{
           ctx.fillStyle = `rgba(${val},${val},${val},255)`;
-        }        
+        }   
+        if(typeof(invert) != 'undefined'){
+          if(invert){
+            ctx.fillStyle = `rgba(${255-val},${255-val},${255-val},255)`;
+          }
+        }    
         ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize,this.cellSize);
         
       }      
