@@ -83,9 +83,11 @@ export class LightSheet{
     //----------------------------------------------------------------
     //----------------------------------------------------------------
 
-    public switchFirst(vec: Vector, luminance){
-        this.lights.splice(0,1,new Light(vec,luminance));
+    public switchLast(vec: Vector, luminance: number){
+        this.lights.unshift(new Light(vec,luminance));
+        this.lights.pop();
         this.calculateLightEffects();
+        console.log(this.lights.length);
     }
 
     public render(ctx: CanvasRenderingContext2D){

@@ -24,11 +24,11 @@ var PLAYING: boolean = false;
 
 var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,1);
 lightSheet.setLight(new Vector(20,20),10);
-//lightSheet.setLight(new Vector(60,60),5);
 //lightSheet.setLight(new Vector(100,20),10);
 
 
 //lightSheet.calculateLightEffects();
+var fc = 0;
 PLAYING = true;
 
 function main(){
@@ -44,6 +44,7 @@ function main(){
     //canvas.render(ctx);
     lightSheet.render(ctx);
 
+    lightSheet.switchLast(new Vector(fc,20),10);
 
 
 
