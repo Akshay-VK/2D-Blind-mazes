@@ -40,7 +40,7 @@ export class LightSheet{
     public setLight(vec: Vector,luminanceValue: number){
         this.lights.push(new Light(vec,luminanceValue));
         this.calculateLightEffects();        
-        console.log(this.lightCanvas);
+        //console.log(this.lightCanvas);
     }
 
     //----------------------------------------------------------------
@@ -50,12 +50,14 @@ export class LightSheet{
         //loop through lights
         //get luminance value
         //loop through all canvas pixels...
-        // add distance .... stuff
+        // add distance .... stuff:
+        //  (lightVal-minLightVal/maxLightVal-minLightVal * (dist / (maxDistVal* lightSize)) * 255
+        var tempCanvas: Canvas = new Canvas(this.rows, this.columns, this.cellSize, true);
         for(var i = 0; i < this.lights.length;i++){
             var lightLuminanceValue: number = this.lights[i].getLuminanceValue();
             var minLuminanceValue = this.lights[i].getMinLuminanceValue();
             var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
-            var lightPercentage: number = (maxLuminanceValue+lightLuminanceValue-minLuminanceValue) / ((maxLuminanceValue-minLuminanceValue));
+            var lightPercentage: number = (lightLuminanceValue-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
 
 
             var lightX: number = this.lights[i].getPositionX();
@@ -64,34 +66,41 @@ export class LightSheet{
                 for(var x = 0; x < this.columns; x++){
                     // the stuff...
                     var distanceFromLight: number = Math.sqrt(
-                        (x-lightX)*(x-lightX)+
-                        (y-lightY)*(y-lightY)
+                        (lightX-x)*(lightX-x)+
+                        (lightY-y)*(lightY-y)
                         );
-                    var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*.25);
-                    var finalValue: number = this.lightCanvas.getColorVal(x,y)+(this.lightIntensity*distanceOverMaxDistanceFactor*lightPercentage*255);
-                    
+                    var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*(this.lightIntensity/50));
+                    var a: number = tempCanvas.getColorVal(x,y);
+                    var b: number = distanceOverMaxDistanceFactor*lightPercentage*255;
+                    //formula 1: a+b
+                    //formula 2: (a * (a/(a+b)))+(b*(b/(a+b)))
+                    var finalValue: number = a+b;
+                                        
                     if(finalValue < 0){
                         finalValue = 0;
                     }else if(finalValue > 255){
                         finalValue = 255;
                     }
-                    this.lightCanvas.setColorVal(x,y,finalValue);
+                    tempCanvas.setColorVal(x,y,finalValue);
                 }
             }
+            this.lightCanvas.setColors(tempCanvas.canvas);
         }
     }
     //----------------------------------------------------------------
     //----------------------------------------------------------------
 
-    public switchLast(vec: Vector, luminance: number){
-        this.lights.unshift(new Light(vec,luminance));
-        this.lights.pop();
+    public setAllLightLuminanceValues(luminance: number){
+        for(var i = 0 ; i < this.lights.length;i++){
+            this.lights[i].setLuminanceValue(luminance);
+        }
         this.calculateLightEffects();
-        console.log(this.lights.length);
+        //console.log(this.lights.length);
     }
 
     public render(ctx: CanvasRenderingContext2D){
-        this.lightCanvas.render(ctx,true);
+        this.lightCanvas.render(ctx,true,false);
+        this.calculateLightEffects();
     }
 
     //SETTERS

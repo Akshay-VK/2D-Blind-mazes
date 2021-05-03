@@ -3,7 +3,7 @@ import { Color } from "../util/Color";
 export class Canvas{
 
 
-  private canvas: Color[];
+  public canvas: Color[];
   private rows: number;
   private columns: number;
   private cellSize: number;
@@ -76,7 +76,7 @@ export class Canvas{
   }
 
   //method for renderring the pixels/colors to the screen
-  render(ctx: CanvasRenderingContext2D, invert?:boolean){
+  render(ctx: CanvasRenderingContext2D, invert?:boolean, alphaWay?:boolean){
     for(var y = 0; y < this.rows;y++){
 
       for(var x = 0; x < this.columns;x++){
@@ -93,8 +93,18 @@ export class Canvas{
         if(typeof(invert) != 'undefined'){
           if(invert){
             ctx.fillStyle = `rgba(${255-val},${255-val},${255-val},255)`;
+            if(typeof alphaWay != 'undefined') {
+              if(alphaWay){
+                ctx.fillStyle = `rgba(${255-val},${255-val},${255-val},${255-val})`;
+              }
+            }
           }
-        }    
+        }   
+        if(typeof alphaWay != 'undefined') {
+          if(alphaWay){
+            ctx.fillStyle = `rgba(${val},${val},${val},${val})`;
+          }
+        }
         ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize,this.cellSize);
         
       }      
