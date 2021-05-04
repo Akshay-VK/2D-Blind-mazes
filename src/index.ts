@@ -15,17 +15,17 @@ ctx.canvas.height = HEIGHT;
 //_________________________
 
 //VARIABLES
-var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE, false);
+var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
 var PLAYING: boolean = false;
 
 //TESTS ONLY
 // var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 // console.log(mazeGen.size);
 
-var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,2);
+var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,10);
 lightSheet.setLight(new Vector(20,20),10);
-lightSheet.setLight(new Vector(100,20),10);
-lightSheet.setLight(new Vector(60,60),10);
+lightSheet.setLight(new Vector(60,20),10);
+lightSheet.setLight(new Vector(40,40),10);
 
 
 //lightSheet.calculateLightEffects();
@@ -33,7 +33,7 @@ PLAYING = true;
 var fc = 0;
 function main(){
   if(PLAYING){
-    fc++;
+    fc+= 5;
     //MAIN CODE HERE
 
     //_______BACKGROUND_________
@@ -43,9 +43,9 @@ function main(){
     //--------------------------//
 
     //canvas.render(ctx);
-    lightSheet.render(ctx);
+    canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-    lightSheet.setAllLightLuminanceValues(Math.abs(Math.sin(fc/10)));
+    //lightSheet.setAllLightLuminanceValues(Math.abs(Math.sin(fc/11)));
 
 
 

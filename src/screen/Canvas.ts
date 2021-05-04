@@ -8,7 +8,7 @@ export class Canvas{
   private columns: number;
   private cellSize: number;
 
-  constructor(rows: number, columns: number, cellSize: number, blackout:boolean){
+  constructor(rows: number, columns: number, cellSize: number, specificColor?:number){
     //setting vars
     this.cellSize = cellSize;
 
@@ -21,8 +21,8 @@ export class Canvas{
     var counter: number = 0;
     for(let y = 0; y < this.rows;y++){
       for(let x = 0; x < this.columns;x++){
-        if(blackout){
-          this.canvas[this.getIndex(x,y)] = new Color(0);
+        if(typeof(specificColor) != 'undefined'){
+          this.canvas[this.getIndex(x,y)] = new Color(specificColor);
         }else{
           this.canvas[this.getIndex(x,y)] = new Color(counter);
         }
@@ -76,39 +76,45 @@ export class Canvas{
   }
 
   //method for renderring the pixels/colors to the screen
-  render(ctx: CanvasRenderingContext2D, invert?:boolean, alphaWay?:boolean){
+  render(ctx: CanvasRenderingContext2D){
     for(var y = 0; y < this.rows;y++){
 
       for(var x = 0; x < this.columns;x++){
-
-        var pixel: Color = this.canvas[this.getIndex(x,y)];
-
-        var val: number = pixel.getColorVal();
+        var val: number = this.canvas[this.getIndex(x,y)].getColorVal();
 
         if(val == 0){
           ctx.fillStyle = 'black';
         }else{
           ctx.fillStyle = `rgba(${val},${val},${val},255)`;
         }   
-        if(typeof(invert) != 'undefined'){
-          if(invert){
-            ctx.fillStyle = `rgba(${255-val},${255-val},${255-val},255)`;
-            if(typeof alphaWay != 'undefined') {
-              if(alphaWay){
-                ctx.fillStyle = `rgba(${255-val},${255-val},${255-val},${255-val})`;
-              }
-            }
-          }
-        }   
-        if(typeof alphaWay != 'undefined') {
-          if(alphaWay){
-            ctx.fillStyle = `rgba(${val},${val},${val},${val})`;
-          }
-        }
+        
         ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize,this.cellSize);
         
       }      
     } 
+  }
+
+  lightCalculatedRender(canvases:Canvas[], ctx: CanvasRenderingContext2D){
+    //looping through all light canvases
+    for(var i = 0;i < canvases.length;i++){
+      //setting current canvas
+      var currentCanvas: Canvas = canvases[i];
+
+      //looping through this canvas
+      for(var y = 0; y < this.rows;y++){
+        for(var x = 0; x < this.columns;x++){
+
+          var colorVal: number = this.canvas[this.getIndex(x,y)].getColorVal();
+
+          var alphaVal: number = currentCanvas.getColorVal(x,y);
+
+          ctx.fillStyle = `rgba(${colorVal},${colorVal},${colorVal},${alphaVal/255})`;
+
+          ctx.fillRect(x* this.cellSize,y * this.cellSize, this.cellSize, this.cellSize);
+
+        }
+      }        
+    }
   }
   
 
@@ -142,9 +148,9 @@ export class Canvas{
   //----------------RESET----------------
   //-------------------------------------
   public resetColors(){
-    for(var y = 0; y < this.columns; y++){
-      for(var x = 0; x < this.rows;x++){
-        this.canvas[this.getIndex(x,y)].setColorVal(0);
+    for(var y = 0; y < this.rows; y++){
+      for(var x = 0; x < this.columns;x++){
+        this.setColorVal(x,y,0);
       }
     }
   }
