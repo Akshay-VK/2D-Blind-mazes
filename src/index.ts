@@ -23,7 +23,7 @@ var PLAYING: boolean = false;
 // console.log(mazeGen.size);
 
 var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,10);
-lightSheet.setLight(new Vector(20,20),10);
+lightSheet.setLight(new Vector(20,20),1);
 lightSheet.setLight(new Vector(60,20),10);
 lightSheet.setLight(new Vector(40,40),10);
 
