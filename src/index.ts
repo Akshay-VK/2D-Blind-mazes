@@ -23,9 +23,13 @@ var PLAYING: boolean = false;
 // console.log(mazeGen.size);
 
 var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,10);
-lightSheet.setLight(new Vector(20,20),1);
-lightSheet.setLight(new Vector(60,20),10);
-lightSheet.setLight(new Vector(40,40),10);
+
+var lightValue = 10;
+var addState:boolean = true
+
+lightSheet.setLight(new Vector(20,20),lightValue);
+lightSheet.setLight(new Vector(60,20),lightValue);
+lightSheet.setLight(new Vector(40,40),lightValue);
 
 
 //lightSheet.calculateLightEffects();
@@ -33,7 +37,7 @@ PLAYING = true;
 var fc = 0;
 function main(){
   if(PLAYING){
-    fc+= 5;
+    fc+= 0.001;
     //MAIN CODE HERE
 
     //_______BACKGROUND_________
@@ -45,8 +49,17 @@ function main(){
     //canvas.render(ctx);
     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-    //lightSheet.setAllLightLuminanceValues(Math.abs(Math.sin(fc/11)));
+    lightSheet.setAllLightLuminanceValues(lightValue);
+    
+    if(addState){
+      lightValue -= 0.1;
+    }else{
+      lightValue += 0.1;
+    }
 
+    if(lightValue <= 0.1 || lightValue >= 10){
+      addState = !addState;
+    }
 
 
 

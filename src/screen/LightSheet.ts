@@ -60,7 +60,7 @@ export class LightSheet{
             var lightLuminanceValue: number = this.lights[i].getLuminanceValue();
             var minLuminanceValue = this.lights[i].getMinLuminanceValue();
             var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
-            var lightPercentage: number = ((lightLuminanceValue-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue));
+            var lightPercentage: number = ((lightLuminanceValue)-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
 
 
             var lightX: number = this.lights[i].getPositionX();
@@ -76,7 +76,7 @@ export class LightSheet{
                         );
                     var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*(this.lightIntensity/50));
                     
-                    var finalValue: number = distanceOverMaxDistanceFactor*lightPercentage*255;
+                    var finalValue: number = distanceOverMaxDistanceFactor*lightPercentage*255*4;
                     //formula 1: a+b
                     //formula 2: (a * (a/(a+b)))+(b*(b/(a+b)))
                                         
