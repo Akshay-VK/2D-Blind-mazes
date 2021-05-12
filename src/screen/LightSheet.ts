@@ -1,6 +1,7 @@
 import { Light } from "../util/Light";
 import { Vector } from "../util/Vector";
 import { Canvas } from "./Canvas";
+import { Dither } from "./Dither";
 
 export class LightSheet{
     private rows: number;
@@ -25,19 +26,6 @@ export class LightSheet{
         this.lights = new Array<Light>();
     }
 
-    //GETTERS
-    public getRows(): number{
-        return this.rows;        
-    }
-    public getColumns(): number{
-        return this.columns;
-    }
-    public getCellSize(): number{
-        return  this.cellSize;
-    }
-    public getCanvases(): Canvas[]{
-        return this.lightCanvases;
-    }
 
     //NOT GETTERS OR SETTERS 🤣
     public setLight(vec: Vector,luminanceValue: number){
@@ -93,12 +81,12 @@ export class LightSheet{
     //----------------------------------------------------------------
     //----------------------------------------------------------------
 
-    public setAllLightLuminanceValues(luminance: number){
-        for(var i = 0 ; i < this.lights.length;i++){
-            this.lights[i].setLuminanceValue(luminance);
+    public ditherAll(ditherer: Dither){
+        for(let i = 0; i < this.lightCanvases.length; i++){
+            this.lightCanvases[i].setColors(
+                ditherer.ditherSingle(this.lightCanvases[i],2)
+            );
         }
-        this.calculateLightEffects();
-        //console.log(this.lights.length);
     }
 
     public render(ctx: CanvasRenderingContext2D){
@@ -108,6 +96,28 @@ export class LightSheet{
         this.calculateLightEffects();
     }
 
+    
+    //GETTERS
+    public getRows(): number{
+        return this.rows;        
+    }
+    public getColumns(): number{
+        return this.columns;
+    }
+    public getCellSize(): number{
+        return  this.cellSize;
+    }
+    public getCanvases(): Canvas[]{
+        return this.lightCanvases;
+    }
+
     //SETTERS
     
+    public setAllLightLuminanceValues(luminance: number){
+        for(var i = 0 ; i < this.lights.length;i++){
+            this.lights[i].setLuminanceValue(luminance);
+        }
+        this.calculateLightEffects();
+        //console.log(this.lights.length);
+    }
 }

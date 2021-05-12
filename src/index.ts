@@ -1,5 +1,6 @@
 import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
 import { Canvas } from "./screen/Canvas";
+import { Dither } from "./screen/Dither";
 import { LightSheet } from "./screen/LightSheet";
 import { Vector } from "./util/Vector";
 //SETUP
@@ -16,13 +17,16 @@ ctx.canvas.height = HEIGHT;
 
 //VARIABLES
 var canvas: Canvas = new Canvas(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE);
+var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,10);
+var dither: Dither = new Dither();
+
+
 var PLAYING: boolean = false;
 
 //TESTS ONLY
 // var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 // console.log(mazeGen.size);
 
-var lightSheet: LightSheet = new LightSheet(HEIGHT/CELLSIZE, WIDTH/CELLSIZE, CELLSIZE,10);
 
 var lightValue = 10;
 var addState:boolean = true
@@ -50,6 +54,7 @@ function main(){
     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
     lightSheet.setAllLightLuminanceValues(lightValue);
+    lightSheet.ditherAll(dither);
     
     if(addState){
       lightValue -= 0.1;
