@@ -81,10 +81,10 @@ export class LightSheet{
     //----------------------------------------------------------------
     //----------------------------------------------------------------
 
-    public ditherAll(ditherer: Dither){
+    public ditherAll(ditherer: Dither, ditherLevel: number){
         for(let i = 0; i < this.lightCanvases.length; i++){
             this.lightCanvases[i].setColors(
-                ditherer.ditherSingle(this.lightCanvases[i],2)
+                ditherer.ditherSingle(this.lightCanvases[i],ditherLevel)
             );
         }
     }
