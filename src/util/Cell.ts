@@ -14,11 +14,15 @@ export class Cell{
     leftBound: boolean;
     rightBound: boolean;
     bottomBound: boolean;
+
+    visited: boolean;
     constructor(position: Vector, width: number, height: number, hasBounds?: boolean,renderArray?: Array<Color>){
         //sset required params
         this.position = position;
         this.width = width;
         this.height = height;
+
+        this.visited = false;
         //set optional params
         if(typeof hasBounds != 'undefined'){
             //setting bounds
