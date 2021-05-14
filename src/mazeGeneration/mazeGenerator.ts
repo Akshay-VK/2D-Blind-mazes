@@ -37,34 +37,86 @@ export class mazeGenerator{
 
 
     generateMaze(){
-        //Given a current cell as a parameter,
-        //Mark the current cell as visited
-        //While the current cell has any unvisited neighbour cells
-        //  Choose one of the unvisited neighbours
-        //  Remove the wall between the current cell and the chosen cell
-        //  Invoke the routine recursively for a chosen cell
+        /*
+        Choose the initial cell, mark it as visited and push it to the stack
+            While the stack is not empty
+                Pop a cell from the stack and make it a current cell
+                If the current cell has any neighbours which have not been visited
+                    Push the current cell to the stack
+                    Choose one of the unvisited neighbours
+                    Remove the wall between the current cell and the chosen cell
+                    Mark the chosen cell as visited and push it to the stack
+         */
+
+        var stack: number[] = new Array<number>();
+                
+        //Choose the initial cell, mark it as visited and push it to the stack
         var currentX = 0;
         var currentY = 0;
         var currentCell = this.generatedMaze[this.getIndex(currentX,currentY)];
 
         currentCell.visited = true;
 
-        var neighbours: number[] = this.checkNeighbours(currentX,currentY);
+        stack.push(this.getIndex(currentX,currentY));
 
-        while(neighbours.length != 0){
-            var randomIndex = Math.floor(Math.random()*neighbours.length);
-            var chosenCell: Cell = this.generatedMaze[randomIndex];
+        //While the stack is not empty
+	while(stack.length != 0){
+	    //Pop a cell from the stack and mark it as current cell
+	    currentCell = this.generatedMaze[stack[stack.length-1]];
+	    
+	    var currentCellNeighbours: number[] = currentCell.checkNeighbours(currentCell.position.getX(),currentCell.position.getY());
+	    //If the current cell has any neighbours which have not been visited
+	    if(currentCellNeighbours.length != 0){
+	        stack.push(this.getIndex(currentCell.position.getX(),currentCell.position.getY()));
+		
+		//choose a random one
+		var chosenOne: Cell = this.generatedMaze[currentCellNeighbours[Math.floor(Math.random()*currentCellNeighbours.length)]];
 
-            //REMOVING WALLS
+		//REMOVING WALLS
 
-            //right
-            if(chosenCell.position.getX() > currentCell.position.getX()){
-                this.generatedMaze[this.getIndex(currentCell.position.getX(),currentCell.position.getY())].visited = true;
-
-                this.generatedMaze[this.getIndex(chosenCell.position.getX(),chosenCell.position.getY())].visited = true;
-                
-            }
+		//right
+		if(chosenOne.position.getX() > currentCell.position.getX()){
+		  chosenOne.updateBounds(-1,0);
+		  currentCell.updateBounds(1,0);
+		}
+		//left
+		if(chosenOne.position.getX() < currentCell.position.getY()){
+		   chosenOne.updateBounds(1,0);
+		   currentCell.updateBounds(-1,0);	
+		}
+		//up
+		if(chosenCell.position.getY() < currentCell.position.getY()){
+		    chosenCell.updateBounds(0,1);
+		    currentCell.updateBounds(0.-1);
+		}
+		//down
+		if(chosenCell.position.getY() > currentCell.position.getY()){
+		    chosenCell.updateBounds(0,-1);
+		    currentCell.updateBoudns(0,1);
+		}
+		
+		chosenCell.visited = true;
+		this.generatedMaze[this.getIndex(chosenCell.position.getX(),chosenCell.position.getY())] = chosenCell;
+		
+	    }
         }
+
+        // var neighbours: number[] = this.checkNeighbours(currentX,currentY);
+
+        // while(neighbours.length != 0){
+        //     var randomIndex = Math.floor(Math.random()*neighbours.length);
+        //     var chosenCell: Cell = this.generatedMaze[randomIndex];
+
+        //     //REMOVING WALLS
+
+        //     //right
+        //     if(chosenCell.position.getX() > currentCell.position.getX()){
+        //         this.generatedMaze[this.getIndex(currentCell.position.getX(),currentCell.position.getY())].visited = true;
+
+        //         this.generatedMaze[this.getIndex(chosenCell.position.getX(),chosenCell.position.getY())].visited = true;
+                
+        //     }
+        // }
 
     }
 
