@@ -95,4 +95,26 @@ export class Cell{
             }
         }
     }
+    debugRender(ctx: CanvasRenderingContext2D,wire?: boolean){
+        if(typeof wire != 'undefined'){
+            //WIREFRAME
+            
+            ctx.fillStyle = 'purple';
+            ctx.fillRect(this.position.getX(), this.position.getY(), this.width, this.height);
+            ctx.fillStyle = 'white'
+            if(this.leftBound){
+                ctx.fillRect(this.position.getX(), this.position.getY(), 3,this.height);
+            }
+            if(this.rightBound){
+                ctx.fillRect(this.position.getX()+this.width, this.position.getY(), 3,this.height);
+            }
+            if(this.bottomBound){
+                ctx.fillRect(this.position.getX(), this.position.getY()+this.height , this.width,3);
+            }
+            if(this.topBound){
+                ctx.fillRect(this.position.getX(), this.position.getY(), this.width,3);
+            }
+            
+        }
+    }
 }
