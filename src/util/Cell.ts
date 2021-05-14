@@ -95,13 +95,13 @@ export class Cell{
             }
         }
     }
-    debugRender(ctx: CanvasRenderingContext2D,wire?: boolean){
-        if(typeof wire != 'undefined'){
+    debugRender(ctx: CanvasRenderingContext2D,wire: boolean){
+        if(wire){
             //WIREFRAME
             
-            ctx.fillStyle = 'purple';
+            ctx.fillStyle = 'rgba(255,0,0,255)';
             ctx.fillRect(this.position.getX(), this.position.getY(), this.width, this.height);
-            ctx.fillStyle = 'white'
+            ctx.fillStyle = 'rgba(255,255,255,255)';
             if(this.leftBound){
                 ctx.fillRect(this.position.getX(), this.position.getY(), 3,this.height);
             }
@@ -115,6 +115,8 @@ export class Cell{
                 ctx.fillRect(this.position.getX(), this.position.getY(), this.width,3);
             }
             
+        }else{
+            console.log('No non-wire debug render implemented');
         }
     }
 }

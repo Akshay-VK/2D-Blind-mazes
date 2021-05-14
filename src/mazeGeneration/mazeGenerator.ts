@@ -20,7 +20,7 @@ export class mazeGenerator {
 
         this.maze = new Array<Cell> (this.size.getX() * this.size.getY());
 
-        this.mazeSize = new Vector((this.size.getX() / 2) - cellSize, (this.size.getX() / 2) - cellSize);
+        this.mazeSize = new Vector((this.size.getX() / 2) - 1, (this.size.getY() / 2) - 1);
 
         //init generated maze
         this.generatedMaze = new Array<Cell> (
@@ -37,7 +37,6 @@ export class mazeGenerator {
                 );
             }
         }
-        console.log(this.generatedMaze);
     }
 
 
@@ -69,7 +68,8 @@ export class mazeGenerator {
         //While the stack is not empty
         while (stack.length != 0) {
             //Pop a cell from the stack and mark it as current cell
-            currentCell = this.generatedMaze[stack[stack.length - 1]];
+            
+            currentCell = this.generatedMaze[stack.pop()];
 
             var currentCellNeighbours: number[] = this.checkNeighbours(currentCell.position.getX(), currentCell.position.getY());
             //If the current cell has any neighbours which have not been visited
@@ -106,8 +106,11 @@ export class mazeGenerator {
                 this.generatedMaze[this.getIndex(chosenOne.position.getX(), chosenOne.position.getY())] = chosenOne;
 
                 this.generatedMaze[this.getIndex(currentCell.position.getX(),currentCell.position.getY())] = currentCell;
+
             }
         }
+        
+        console.log(this.generatedMaze)
     }
 
     private checkNeighbours(x: number, y: number): number[] {
@@ -177,8 +180,8 @@ export class mazeGenerator {
     }
 
     public render(ctx: CanvasRenderingContext2D){
-        for(var i = 0 ; i< this.generateMaze.length;i++){
-            this.generateMaze[i].render();
+        for(var i = 0 ; i< this.generatedMaze.length;i++){
+            this.generatedMaze[i].debugRender(ctx,true);
         }
     }
 }

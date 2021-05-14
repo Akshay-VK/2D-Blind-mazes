@@ -7,7 +7,7 @@ import { Vector } from "./util/Vector";
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
-const CELLSIZE: number = 10;
+const CELLSIZE: number = 5;
 const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
 const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
 
@@ -24,7 +24,7 @@ var dither: Dither = new Dither();
 var PLAYING: boolean = false;
 
 //TESTS ONLY
-var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
+var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),30);
 console.log(mazeGen.size);
 mazeGen.generateMaze();
 
@@ -67,11 +67,14 @@ function main(time: number){
     //--------------------------//
 
     //canvas.render(ctx);
-    //canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-    //lightSheet.setAllLightLuminanceValues(lightValue);
-    //lightSheet.ditherAll(dither,2);
 
+
+    // canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+
+    // lightSheet.setAllLightLuminanceValues(lightValue);
+    // lightSheet.ditherAll(dither,2);
+    
     mazeGen.render(ctx);
 
 
