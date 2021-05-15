@@ -30,7 +30,7 @@ export class mazeGenerator {
         for (var y = 0; y<this.mazeSize.getY(); y++) {
             for (var x = 0; x<this.mazeSize.getX(); x++) {
                 this.generatedMaze[y * this.mazeSize.getX() + x] = new Cell(
-                    new Vector(x*this.cellSize, y*this.cellSize),
+                    new Vector(x, y),
                     this.cellSize,
                     this.cellSize,
                     true

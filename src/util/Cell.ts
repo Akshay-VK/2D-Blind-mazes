@@ -100,19 +100,19 @@ export class Cell{
             //WIREFRAME
             
             ctx.fillStyle = 'rgba(255,0,0,255)';
-            ctx.fillRect(this.position.getX(), this.position.getY(), this.width, this.height);
+            ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, this.width, this.height);
             ctx.fillStyle = 'rgba(255,255,255,255)';
             if(this.leftBound){
-                ctx.fillRect(this.position.getX(), this.position.getY(), 3,this.height);
+                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, 3,this.height);
             }
             if(this.rightBound){
-                ctx.fillRect(this.position.getX()+this.width, this.position.getY(), 3,this.height);
+                ctx.fillRect(this.position.getX()*this.width+this.width, this.position.getY()*this.height, 3,this.height);
             }
             if(this.bottomBound){
-                ctx.fillRect(this.position.getX(), this.position.getY()+this.height , this.width,3);
+                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height+this.height , this.width,3);
             }
             if(this.topBound){
-                ctx.fillRect(this.position.getX(), this.position.getY(), this.width,3);
+                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, this.width,3);
             }
             
         }else{
