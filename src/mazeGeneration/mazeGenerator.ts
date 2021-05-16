@@ -103,6 +103,9 @@ export class mazeGenerator {
                 }
 
                 chosenOne.visited = true;
+
+		stack.push(this.getIndex(chosenOne.position.getX(),chosenOne.position.getY()));
+
                 this.generatedMaze[this.getIndex(chosenOne.position.getX(), chosenOne.position.getY())] = chosenOne;
 
                 this.generatedMaze[this.getIndex(currentCell.position.getX(),currentCell.position.getY())] = currentCell;

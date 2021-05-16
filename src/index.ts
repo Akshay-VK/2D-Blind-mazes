@@ -8,8 +8,12 @@ const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
 const CELLSIZE: number = 5;
-const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
-const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
+
+//optional
+//const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
+//const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
+const WIDTH:number = 800;
+const HEIGHT: number = 600;
 
 ctx.canvas.width = WIDTH;
 ctx.canvas.height = HEIGHT;
@@ -24,9 +28,9 @@ var dither: Dither = new Dither();
 var PLAYING: boolean = false;
 
 //TESTS ONLY
-var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),30);
+var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 console.log(mazeGen.size);
-mazeGen.generateMaze();
+//mazeGen.generateMaze();
 
 
 
@@ -70,12 +74,12 @@ function main(time: number){
 
 
 
-    // canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-    // lightSheet.setAllLightLuminanceValues(lightValue);
-    // lightSheet.ditherAll(dither,2);
+     lightSheet.setAllLightLuminanceValues(lightValue);
+     lightSheet.ditherAll(dither,2);
     
-    mazeGen.render(ctx);
+    //mazeGen.render(ctx);
 
 
 
