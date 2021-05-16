@@ -30,7 +30,7 @@ var PLAYING: boolean = false;
 //TESTS ONLY
 var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
 console.log(mazeGen.size);
-//mazeGen.generateMaze();
+mazeGen.generateMaze();
 
 
 
@@ -74,12 +74,12 @@ function main(time: number){
 
 
 
-     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+    //  canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-     lightSheet.setAllLightLuminanceValues(lightValue);
-     lightSheet.ditherAll(dither,2);
+    //  lightSheet.setAllLightLuminanceValues(lightValue);
+    //  lightSheet.ditherAll(dither,2);
     
-    //mazeGen.render(ctx);
+    mazeGen.render(ctx);
 
 
 

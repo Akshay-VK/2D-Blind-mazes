@@ -3,19 +3,21 @@ import { Color } from "./Color";
 import { Vector } from "./Vector";
 
 export class Cell{
-    position: Vector;
+    private position: Vector;
     width: number;
     height: number;
     hasBounds: boolean;
     renderArray: Array<Color>;
 
     //bounds
-    topBound: boolean;
-    leftBound: boolean;
-    rightBound: boolean;
-    bottomBound: boolean;
+    private topBound: boolean;
+    private leftBound: boolean;
+    private rightBound: boolean;
+    private bottomBound: boolean;
 
-    visited: boolean;
+    public visited: boolean;
+
+    
     constructor(position: Vector, width: number, height: number, hasBounds?: boolean,renderArray?: Array<Color>){
         //sset required params
         this.position = position;
@@ -118,5 +120,16 @@ export class Cell{
         }else{
             console.log('No non-wire debug render implemented');
         }
+    }
+
+    get pos(): Vector{
+        return this.position;
+    }
+
+    get posX(): number{
+        return this.position.getX();        
+    }
+    get posY(): number{
+        return this.position.getY();
     }
 }

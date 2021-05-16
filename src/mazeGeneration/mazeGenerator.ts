@@ -40,7 +40,7 @@ export class mazeGenerator {
     }
 
 
-    generateMaze() {
+    generateMaze(): void {
         /*
         Choose the initial cell, mark it as visited and push it to the stack
             While the stack is not empty
@@ -55,11 +55,9 @@ export class mazeGenerator {
         var stack: number[] = new Array<number> ();
 
         //Choose the initial cell, mark it as visited and push it to the stack
-        var currentCell = this.generatedMaze[0];
+        var currentCell: number =0;      
 
-        console.log(this.generatedMaze[0]);
-
-        this.generatedMaze[0].visited = true;
+        this.generatedMaze[currentCell].visited = true;
 
         stack.push(0);
 
@@ -67,46 +65,43 @@ export class mazeGenerator {
         while (stack.length != 0) {
             //Pop a cell from the stack and mark it as current cell
             
-            currentCell = this.generatedMaze[stack.pop()];
+            currentCell = stack.pop();
 
-            var currentCellNeighbours: number[] = this.checkNeighbours(currentCell.position.getX(), currentCell.position.getY());
+            var currentCellNeighbours: number[] = this.checkNeighbours(this.generatedMaze[currentCell].posX, this.generatedMaze[currentCell].posY);
             //If the current cell has any neighbours which have not been visited
             if (currentCellNeighbours.length != 0) {
-                stack.push(this.getIndex(currentCell.position.getX(), currentCell.position.getY()));
+                stack.push(currentCell);
 
                 //choose a random one
-                var chosenOne: Cell = this.generatedMaze[currentCellNeighbours[Math.floor(Math.random() * currentCellNeighbours.length)]];
+                var chosenOneIndex: number = Math.floor(Math.random() * currentCellNeighbours.length);
+                var chosenOne: number = currentCellNeighbours[chosenOneIndex];
 
                 //REMOVING WALLS
 
                 //right
-                if (chosenOne.position.getX()> currentCell.position.getX()) {
-                    chosenOne.updateBound(-1, 0);
-                    currentCell.updateBound(1, 0);
+                if (this.generatedMaze[chosenOne].posX> this.generatedMaze[currentCell].posX) {
+                    this.generatedMaze[chosenOne].updateBound(-1, 0);
+                    this.generatedMaze[currentCell].updateBound(1, 0);
                 }
                 //left
-                if (chosenOne.position.getX()<currentCell.position.getY()) {
-                    chosenOne.updateBound(1, 0);
-                    currentCell.updateBound(-1, 0);
+                if (this.generatedMaze[chosenOne].posX<this.generatedMaze[currentCell].posX) {
+                    this.generatedMaze[chosenOne].updateBound(1, 0);
+                    this.generatedMaze[currentCell].updateBound(-1, 0);
                 }
                 //up
-                if (chosenOne.position.getY()<currentCell.position.getY()) {
-                    chosenOne.updateBound(0, 1);
-                    currentCell.updateBound(0, -1);
+                if (this.generatedMaze[chosenOne].posY<this.generatedMaze[currentCell].posY) {
+                    this.generatedMaze[chosenOne].updateBound(0, 1);
+                    this.generatedMaze[currentCell].updateBound(0, -1);
                 }
                 //down
-                if (chosenOne.position.getY()> currentCell.position.getY()) {
-                    chosenOne.updateBound(0, -1);
-                    currentCell.updateBound(0, 1);
+                if (this.generatedMaze[chosenOne].posY> this.generatedMaze[currentCell].posY) {
+                    this.generatedMaze[chosenOne].updateBound(0, -1);
+                    this.generatedMaze[currentCell].updateBound(0, 1);
                 }
 
-                chosenOne.visited = true;
+                this.generatedMaze[chosenOne].visited = true;
 
-		stack.push(this.getIndex(chosenOne.position.getX(),chosenOne.position.getY()));
-
-                this.generatedMaze[this.getIndex(chosenOne.position.getX(), chosenOne.position.getY())] = chosenOne;
-
-                this.generatedMaze[this.getIndex(currentCell.position.getX(),currentCell.position.getY())] = currentCell;
+		        stack.push(chosenOne);
 
             }
         }
@@ -123,26 +118,27 @@ export class mazeGenerator {
         var right: Cell = this.getIndex(x + 1, y)>= 0 ? this.generatedMaze[this.getIndex(x + 1, y)] : undefined;
         var left: Cell = this.getIndex(x - 1, y)>= 0 ? this.generatedMaze[this.getIndex(x - 1, y)] : undefined;
 
-        if (top && !top.visited) {
+        if (typeof top != 'undefined' && !top.visited) {
 
-            neighbourIndeces.push(this.getIndex(top.position.getX(), top.position.getY()));
+            neighbourIndeces.push(this.getIndex(top.posX, top.posY));
 
-        } else if (bottom && !bottom.visited) {
+        } else if (typeof bottom != 'undefined' && !bottom.visited) {
 
-            neighbourIndeces.push(this.getIndex(bottom.position.getX(), bottom.position.getY()));
+            neighbourIndeces.push(this.getIndex(bottom.posX, bottom.posY));
 
-        } else if (left && !left.visited) {
+        } else if (typeof left != 'undefined' && !left.visited) {
 
-            neighbourIndeces.push(this.getIndex(left.position.getX(), left.position.getY()));
+            neighbourIndeces.push(this.getIndex(left.posX, left.posY));
 
-        } else if (right && !right.visited) {
+        } else if (typeof right != 'undefined' && !right.visited) {
 
-            neighbourIndeces.push(this.getIndex(right.position.getX(), right.position.getY()));
+            neighbourIndeces.push(this.getIndex(right.posX, right.posY));
 
         }
 
         return neighbourIndeces;
     }
+
 
     getIndex(x: number, y: number): number {
 
@@ -152,8 +148,10 @@ export class mazeGenerator {
 
         return y * this.mazeSize.getX() + x;
     }
-
-
+    
+    /**
+     * Determines the total resolution of the maze excluding the tile width and height
+     */
     //function to determine the resolution of the maze
     private determineMazeResolution(screenWidth: number, screenHeight: number, cellSize: number): void {
         //WIDTH CALCULATIONS
