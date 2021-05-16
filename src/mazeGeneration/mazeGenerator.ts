@@ -55,15 +55,13 @@ export class mazeGenerator {
         var stack: number[] = new Array<number> ();
 
         //Choose the initial cell, mark it as visited and push it to the stack
-        var currentX = 0;
-        var currentY = 0;
         var currentCell = this.generatedMaze[0];
 
         console.log(this.generatedMaze[0]);
 
         this.generatedMaze[0].visited = true;
 
-        stack.push(this.getIndex(currentX, currentY));
+        stack.push(0);
 
         //While the stack is not empty
         while (stack.length != 0) {
