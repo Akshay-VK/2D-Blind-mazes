@@ -28,9 +28,11 @@ var dither: Dither = new Dither();
 var PLAYING: boolean = false;
 
 //TESTS ONLY
-var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),10);
+var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),5);
 console.log(mazeGen.size);
 mazeGen.generateMaze();
+mazeGen.generateWalls();
+
 
 
 
@@ -79,7 +81,7 @@ function main(time: number){
     //  lightSheet.setAllLightLuminanceValues(lightValue);
     //  lightSheet.ditherAll(dither,2);
     
-    mazeGen.render(ctx);
+    mazeGen.completeMazeRender(ctx);
 
 
 

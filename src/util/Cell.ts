@@ -17,8 +17,10 @@ export class Cell{
 
     public visited: boolean;
 
+    private color: Color;
+
     
-    constructor(position: Vector, width: number, height: number, hasBounds?: boolean,renderArray?: Array<Color>){
+    constructor(position: Vector, width: number, height: number, hasBounds?: boolean, color?: Color, renderArray?: Array<Color>){
         //sset required params
         this.position = position;
         this.width = width;
@@ -26,13 +28,15 @@ export class Cell{
 
         this.visited = false;
         //set optional params
-        if(typeof hasBounds != 'undefined'){
+        if(typeof hasBounds != 'undefined' && hasBounds){
             //setting bounds
             this.hasBounds = hasBounds;
             this.topBound = true;
             this.leftBound = true;
             this.rightBound = true;
             this.bottomBound = true;
+
+            this.color = color;
         }
         if(typeof renderArray != 'undefined'){
             this.renderArray = renderArray;
@@ -104,23 +108,36 @@ export class Cell{
             //ctx.fillStyle = 'rgba(255,0,0,255)';
             //ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, this.width, this.height);
             ctx.fillStyle = 'rgba(255,255,255,255)';
+            var localWidth = 10;
             if(this.leftBound){
-                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, 3,this.height);
+                ctx.fillRect(this.position.getX()*localWidth*this.width, this.position.getY()*localWidth*this.height, 3,this.height*localWidth);
             }
             if(this.rightBound){
-                ctx.fillRect(this.position.getX()*this.width+this.width, this.position.getY()*this.height, 3,this.height);
+                ctx.fillRect(this.position.getX()*localWidth*this.width+this.width*localWidth, this.position.getY()*localWidth*this.height, 3,this.height*localWidth);
             }
             if(this.bottomBound){
-                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height+this.height , this.width,3);
+                ctx.fillRect(this.position.getX()*localWidth*this.width, this.position.getY()*localWidth*this.height+this.height*localWidth , this.width*localWidth,3);
             }
             if(this.topBound){
-                ctx.fillRect(this.position.getX()*this.width, this.position.getY()*this.height, this.width,3);
+                ctx.fillRect(this.position.getX()*localWidth*this.width, this.position.getY()*localWidth*this.height, this.width*localWidth,3);
             }
             
         }else{
             console.log('No non-wire debug render implemented');
         }
     }
+    noBoundRender(ctx: CanvasRenderingContext2D){
+        if(this.hasBounds != null ){
+            ctx.fillStyle = `rgba(${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()})`;
+            if(this.visited){
+                ctx.fillRect(this.position.getX()*this.width,this.position.getY()*this.height,this.width,this.height);
+            }else{
+                console.log('not visited');
+            }
+        }
+    }
+
+    //GETTERS
 
     get pos(): Vector{
         return this.position;
@@ -132,4 +149,18 @@ export class Cell{
     get posY(): number{
         return this.position.getY();
     }
+
+    get left(): boolean{
+        return this.leftBound;
+    }
+    get right(): boolean{
+        return this.rightBound;
+    }
+    get top(): boolean{
+        return this.topBound;
+    }
+    get bottom(): boolean{
+        return this.bottomBound;
+    }
+    
 }

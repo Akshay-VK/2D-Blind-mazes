@@ -1,6 +1,7 @@
 import {
     Cell
 } from "../util/Cell";
+import { Color } from "../util/Color";
 import {
     Vector
 } from "../util/Vector";
@@ -11,6 +12,9 @@ export class mazeGenerator {
     size: Vector;
     mazeSize: Vector;
     cellSize: number;
+
+    private generateMazeStep1: boolean = false;
+
     constructor(screenWidth: number, screenHeight: number, cellSize: number) {
         //init
         this.size = new Vector(0, 0);
@@ -37,10 +41,22 @@ export class mazeGenerator {
                 );
             }
         }
+        for (var y = 0; y<this.size.getY(); y++) {
+            for (var x = 0; x<this.size.getX(); x++) {
+                this.generatedMaze[y * this.size.getX() + x] = new Cell(
+                    new Vector(x, y),
+                    this.cellSize,
+                    this.cellSize,
+                    false,
+                    new Color(255)
+                );
+            }
+        }
+        
     }
 
-
-    generateMaze(): void {
+    //GENERATE MAZE STEP 1
+    public generateMaze(): void {
         /*
         Choose the initial cell, mark it as visited and push it to the stack
             While the stack is not empty
@@ -75,23 +91,25 @@ export class mazeGenerator {
                 //choose a random one
                 var chosenOneIndex: number = Math.floor(Math.random() * currentCellNeighbours.length);
                 var chosenOne: number = currentCellNeighbours[chosenOneIndex];
+                
+                //console.log(currentCellNeighbours.length , chosenOneIndex)
 
                 //REMOVING WALLS
 
                 //right
                 if (this.generatedMaze[chosenOne].posX> this.generatedMaze[currentCell].posX) {
-                    this.generatedMaze[chosenOne].updateBound(-1, 0);
-                    this.generatedMaze[currentCell].updateBound(1, 0);
+                    this.generatedMaze[chosenOne].updateBound(-1, 0 , false);
+                    this.generatedMaze[currentCell].updateBound(1, 0 , false);
                 }
                 //left
                 if (this.generatedMaze[chosenOne].posX<this.generatedMaze[currentCell].posX) {
-                    this.generatedMaze[chosenOne].updateBound(1, 0);
-                    this.generatedMaze[currentCell].updateBound(-1, 0);
+                    this.generatedMaze[chosenOne].updateBound(1, 0 , false);
+                    this.generatedMaze[currentCell].updateBound(-1, 0 , false);
                 }
                 //up
                 if (this.generatedMaze[chosenOne].posY<this.generatedMaze[currentCell].posY) {
-                    this.generatedMaze[chosenOne].updateBound(0, 1);
-                    this.generatedMaze[currentCell].updateBound(0, -1);
+                    this.generatedMaze[chosenOne].updateBound(0, 1 , false);
+                    this.generatedMaze[currentCell].updateBound(0, -1 , false);
                 }
                 //down
                 if (this.generatedMaze[chosenOne].posY> this.generatedMaze[currentCell].posY) {
@@ -105,13 +123,50 @@ export class mazeGenerator {
 
             }
         }
-        
-        console.log(this.generatedMaze)
+        this.generateMazeStep1 = true;
+        //console.log(this.generatedMaze)
+    }
+
+    public generateWalls(): void {
+        if(this.generateMazeStep1){
+            
+            var i: number = 0;
+            for(var y = 1; y < this.size.getY()-1; y += 2){
+                for(var x = 1; x < this.size.getX(); x += 2){
+                    if(this.generatedMaze[i].top){
+                        this.maze[this.getIndex(x-1,y-1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x,y-1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x+1,y-1,this.size.getX())].visited = true;                        
+                    }
+                    if(this.generatedMaze[i].right){
+                        this.maze[this.getIndex(x+1,y-1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x+1,y,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x+1,y+1,this.size.getX())].visited = true;                        
+                    }
+                    if(this.generatedMaze[i].left){
+                        this.maze[this.getIndex(x,y-1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x,y,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x,y+1,this.size.getX())].visited = true;                        
+                    }
+                    if(this.generatedMaze[i].bottom){
+                        this.maze[this.getIndex(x-1,y+1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x,y+1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x+1,y+1,this.size.getX())].visited = true;                        
+                    }
+                    
+                    i++;                    
+                }
+            }
+
+        }else{
+            throw new Error('maze not generated');
+        }
     }
 
     private checkNeighbours(x: number, y: number): number[] {
 
         var neighbourIndeces: number[] = new Array<number> ();
+        var counter = 0;
 
         var top: Cell = this.getIndex(x, y - 1)>= 0 ? this.generatedMaze[this.getIndex(x, y - 1)] : undefined;
         var bottom: Cell = this.getIndex(x, y + 1)>= 0 ? this.generatedMaze[this.getIndex(x, y + 1)] : undefined;
@@ -120,33 +175,45 @@ export class mazeGenerator {
 
         if (typeof top != 'undefined' && !top.visited) {
 
-            neighbourIndeces.push(this.getIndex(top.posX, top.posY));
+            neighbourIndeces[counter] = this.getIndex(top.posX, top.posY);
+            counter++;
 
-        } else if (typeof bottom != 'undefined' && !bottom.visited) {
+        } 
+        if (typeof bottom != 'undefined' && !bottom.visited) {
 
-            neighbourIndeces.push(this.getIndex(bottom.posX, bottom.posY));
+            neighbourIndeces[counter] = this.getIndex(bottom.posX, bottom.posY);
+            counter++;
 
-        } else if (typeof left != 'undefined' && !left.visited) {
+        } 
+        if (typeof left != 'undefined' && !left.visited) {
 
-            neighbourIndeces.push(this.getIndex(left.posX, left.posY));
+            neighbourIndeces[counter] = this.getIndex(left.posX, left.posY);
+            counter++;
 
-        } else if (typeof right != 'undefined' && !right.visited) {
+        } 
+        if (typeof right != 'undefined' && !right.visited) {
 
-            neighbourIndeces.push(this.getIndex(right.posX, right.posY));
+            neighbourIndeces[counter] = this.getIndex(right.posX, right.posY);
+            counter++;
 
         }
 
+        //console.log(neighbourIndeces)
         return neighbourIndeces;
     }
 
 
-    getIndex(x: number, y: number): number {
+    private getIndex(x: number, y: number, width?: number): number {
 
         if (x<0 || y<0 || x> this.mazeSize.getX() - 1 || y> this.mazeSize.getY() - 1) {
             return -1;
         }
 
-        return y * this.mazeSize.getX() + x;
+        if(width != undefined){
+            return y * this.mazeSize.getX() + x;
+        }else{
+            return y * width + x;
+        }
     }
     
     /**
@@ -182,5 +249,10 @@ export class mazeGenerator {
         for(var i = 0 ; i< this.generatedMaze.length;i++){
             this.generatedMaze[i].debugRender(ctx,true);
         }
+    }
+    public completeMazeRender(ctx: CanvasRenderingContext2D){
+        this.maze.forEach((cell: Cell)=>{
+            cell.noBoundRender(ctx);
+        })
     }
 }
