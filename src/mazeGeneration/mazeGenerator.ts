@@ -43,7 +43,7 @@ export class mazeGenerator {
         }
         for (var y = 0; y<this.size.getY(); y++) {
             for (var x = 0; x<this.size.getX(); x++) {
-                this.generatedMaze[y * this.size.getX() + x] = new Cell(
+                this.maze[y * this.size.getX() + x] = new Cell(
                     new Vector(x, y),
                     this.cellSize,
                     this.cellSize,
@@ -67,6 +67,7 @@ export class mazeGenerator {
                     Remove the wall between the current cell and the chosen cell
                     Mark the chosen cell as visited and push it to the stack
          */
+        //console.log('reaching 1');
 
         var stack: number[] = new Array<number> ();
 
@@ -79,11 +80,15 @@ export class mazeGenerator {
 
         //While the stack is not empty
         while (stack.length != 0) {
+            //console.log('reaching 2');
             //Pop a cell from the stack and mark it as current cell
             
             currentCell = stack.pop();
 
             var currentCellNeighbours: number[] = this.checkNeighbours(this.generatedMaze[currentCell].posX, this.generatedMaze[currentCell].posY);
+            
+            
+            //console.log(currentCellNeighbours);
             //If the current cell has any neighbours which have not been visited
             if (currentCellNeighbours.length != 0) {
                 stack.push(currentCell);
@@ -132,26 +137,26 @@ export class mazeGenerator {
             
             var i: number = 0;
             for(var y = 1; y < this.size.getY()-1; y += 2){
-                for(var x = 1; x < this.size.getX(); x += 2){
+                for(var x = 1; x < this.size.getX()-1; x += 2){
                     if(this.generatedMaze[i].top){
-                        this.maze[this.getIndex(x-1,y-1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x,y-1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x+1,y-1,this.size.getX())].visited = true;                        
+                        this.maze[this.getIndex(x - 1,y - 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x    ,y - 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x + 1,y - 1,this.size.getX())].visited = true;                        
                     }
                     if(this.generatedMaze[i].right){
-                        this.maze[this.getIndex(x+1,y-1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x+1,y,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x+1,y+1,this.size.getX())].visited = true;                        
+                        this.maze[this.getIndex(x + 1,y - 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x + 1,y    ,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x + 1,y + 1,this.size.getX())].visited = true;                        
                     }
                     if(this.generatedMaze[i].left){
-                        this.maze[this.getIndex(x,y-1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x,y,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x,y+1,this.size.getX())].visited = true;                        
+                        this.maze[this.getIndex(x - 1,y - 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x - 1,y    ,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x - 1,y + 1,this.size.getX())].visited = true;                        
                     }
                     if(this.generatedMaze[i].bottom){
-                        this.maze[this.getIndex(x-1,y+1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x,y+1,this.size.getX())].visited = true;
-                        this.maze[this.getIndex(x+1,y+1,this.size.getX())].visited = true;                        
+                        this.maze[this.getIndex(x - 1,y + 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x    ,y + 1,this.size.getX())].visited = true;
+                        this.maze[this.getIndex(x + 1,y + 1,this.size.getX())].visited = true;                        
                     }
                     
                     i++;                    
@@ -173,6 +178,7 @@ export class mazeGenerator {
         var right: Cell = this.getIndex(x + 1, y)>= 0 ? this.generatedMaze[this.getIndex(x + 1, y)] : undefined;
         var left: Cell = this.getIndex(x - 1, y)>= 0 ? this.generatedMaze[this.getIndex(x - 1, y)] : undefined;
 
+        //console.log(this.getIndex(x, y + 1));
         if (typeof top != 'undefined' && !top.visited) {
 
             neighbourIndeces[counter] = this.getIndex(top.posX, top.posY);
@@ -197,6 +203,7 @@ export class mazeGenerator {
             counter++;
 
         }
+        
 
         //console.log(neighbourIndeces)
         return neighbourIndeces;
@@ -205,15 +212,21 @@ export class mazeGenerator {
 
     private getIndex(x: number, y: number, width?: number): number {
 
+        var returnVal: number = -2;
         if (x<0 || y<0 || x> this.mazeSize.getX() - 1 || y> this.mazeSize.getY() - 1) {
-            return -1;
+            returnVal =  -1;
         }
 
-        if(width != undefined){
-            return y * this.mazeSize.getX() + x;
+        if(width == undefined){
+            returnVal =  y * this.mazeSize.getX() + x;
+            if (x<0 || y<0 || x> this.mazeSize.getX() - 1 || y> this.mazeSize.getY() - 1) {
+                returnVal =  -1;
+            }
         }else{
-            return y * width + x;
+            returnVal =  y * width + x;
         }
+
+        return returnVal;
     }
     
     /**

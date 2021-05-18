@@ -82,6 +82,7 @@ function main(time: number){
     //  lightSheet.ditherAll(dither,2);
     
     mazeGen.completeMazeRender(ctx);
+    //mazeGen.render(ctx);
 
 
 

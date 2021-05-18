@@ -37,8 +37,8 @@ export class Cell{
             this.bottomBound = true;
 
         }
-        if(typeof hasBounds != 'undefined' && !hasBounds){
-            this.color = color;
+        if(typeof hasBounds == 'undefined' || (hasBounds != undefined && !hasBounds)){
+            this.color = new Color(color.getColorVal());
         }
         if(typeof renderArray != 'undefined'){
             this.renderArray = renderArray;
@@ -129,12 +129,19 @@ export class Cell{
         }
     }
     noBoundRender(ctx: CanvasRenderingContext2D){
-        if(this.hasBounds != null){
+        //console.log('a');
+        if(this.color != null){
+            //console.log('b');
             ctx.fillStyle = `rgba(${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()})`;
             if(this.visited){
-                ctx.fillRect(this.position.getX()*this.width,this.position.getY()*this.height,this.width,this.height);
+                ctx.fillRect(
+                    this.position.getX()*this.width * 5,
+                    this.position.getY()*this.height * 5,
+                    this.width * 5,
+                    this.height * 5
+                );
             }else{
-                console.log('not visited');
+                //console.log('not visited');
             }
         }
     }
