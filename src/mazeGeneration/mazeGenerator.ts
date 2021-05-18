@@ -251,8 +251,8 @@ export class mazeGenerator {
         }
     }
     public completeMazeRender(ctx: CanvasRenderingContext2D){
-        this.maze.forEach((cell: Cell)=>{
-            cell.noBoundRender(ctx);
-        })
+        for(var i = 0 ; i < this.maze.length;i++){
+            this.maze[i].noBoundRender(ctx);
+        }
     }
 }

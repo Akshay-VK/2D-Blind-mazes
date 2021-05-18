@@ -36,6 +36,8 @@ export class Cell{
             this.rightBound = true;
             this.bottomBound = true;
 
+        }
+        if(typeof hasBounds != 'undefined' && !hasBounds){
             this.color = color;
         }
         if(typeof renderArray != 'undefined'){
@@ -127,7 +129,7 @@ export class Cell{
         }
     }
     noBoundRender(ctx: CanvasRenderingContext2D){
-        if(this.hasBounds != null ){
+        if(this.hasBounds != null){
             ctx.fillStyle = `rgba(${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()},${this.color.getColorVal()})`;
             if(this.visited){
                 ctx.fillRect(this.position.getX()*this.width,this.position.getY()*this.height,this.width,this.height);
