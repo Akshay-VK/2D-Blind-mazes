@@ -40,6 +40,12 @@ export class Light{
     public getMaxLuminanceValue(): number{
         return this.maxLuminanceValue;
     }
+    get posX(): number{
+        return this.position.getX();
+    }
+    get posY(): number{
+        return this.position.getY();
+    }
     
 
     //SETTERS
@@ -57,7 +63,7 @@ export class Light{
         if(val >= 0 && val <= 10){
             this.luminanceValue = val;
         }else{
-            throw new Error("Invalid light luminance value specified while setting.");
+            throw new Error("Invalid light luminance value specified while setting: "+ val);
         }
     }
 }

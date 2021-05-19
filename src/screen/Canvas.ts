@@ -104,13 +104,17 @@ export class Canvas{
       for(var y = 0; y < this.rows;y++){
         for(var x = 0; x < this.columns;x++){
 
-          var colorVal: number = this.canvas[this.getIndex(x,y)].getColorVal();
 
           var alphaVal: number = currentCanvas.getColorVal(x,y);
 
-          ctx.fillStyle = `rgba(${colorVal},${colorVal},${colorVal},${alphaVal/255})`;
+          if(alphaVal > 0){              
+            var colorVal: number = this.canvas[this.getIndex(x,y)].getColorVal();
 
-          ctx.fillRect(x* this.cellSize,y * this.cellSize, this.cellSize, this.cellSize);
+            ctx.fillStyle = `rgba(${colorVal},${colorVal},${colorVal},${alphaVal/255})`;
+
+            ctx.fillRect(x* this.cellSize,y * this.cellSize, this.cellSize, this.cellSize);
+            
+          }
 
         }
       }        

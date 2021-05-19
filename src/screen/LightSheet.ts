@@ -46,34 +46,42 @@ export class LightSheet{
         //  (lightVal-minLightVal/maxLightVal-minLightVal * (dist / (maxDistVal* lightSize)) * 255
         for(var i = 0; i < this.lights.length;i++){
             var lightLuminanceValue: number = this.lights[i].getLuminanceValue();
-            var minLuminanceValue = this.lights[i].getMinLuminanceValue();
-            var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
-            var lightPercentage: number = ((lightLuminanceValue)-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
+            //var minLuminanceValue = this.lights[i].getMinLuminanceValue();
+            //var maxLuminanceValue = this.lights[i].getMaxLuminanceValue();
+            //var lightPercentage: number = ((lightLuminanceValue)-minLuminanceValue) / (maxLuminanceValue-minLuminanceValue);
 
 
-            var lightX: number = this.lights[i].getPositionX();
-            var lightY: number = this.lights[i].getPositionY();
+            var lightX: number = this.lights[i].posX;
+            var lightY: number = this.lights[i].posY;
 
-            this.lightCanvases[i].resetColors();
             for(var y = 0; y < this.rows; y++){
                 for(var x = 0; x < this.columns; x++){
                     // the stuff...
-                    var distanceFromLight: number = Math.sqrt(
-                        (lightX-x)*(lightX-x)+
-                        (lightY-y)*(lightY-y)
-                        );
-                    var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*(this.lightIntensity/50));
-                    
-                    var finalValue: number = distanceOverMaxDistanceFactor*lightPercentage*255*4;
-                    //formula 1: a+b
-                    //formula 2: (a * (a/(a+b)))+(b*(b/(a+b)))
-                                        
-                    if(finalValue < 0){
-                        finalValue = 0;
-                    }else if(finalValue > 255){
-                        finalValue = 255;
+
+                    if(x-lightX < 300 || y-lightY<300){
+                        var distanceFromLight: number = Math.sqrt(
+                            (lightX-x)*(lightX-x)+
+                            (lightY-y)*(lightY-y)
+                            );
+                        //var distanceOverMaxDistanceFactor: number = distanceFromLight / (this.maxDistanceFromLight*(this.lightIntensity/50));
+                        
+                        //var finalValue: number = distanceOverMaxDistanceFactor*lightPercentage*255*4;
+
+                        var finalValue: number = distanceFromLight*this.lightIntensity*lightLuminanceValue;
+                                            
+                        if(finalValue < 0){
+                            finalValue = 0;
+                        }else if(finalValue > 255){
+                            finalValue = 255;
+                        }
+                        
+                        this.lightCanvases[i].setColorVal(x,y,255-finalValue);
+
+                    }else{
+                        this.lightCanvases[i].setColorVal(x,y,0);
+                        
                     }
-                    this.lightCanvases[i].setColorVal(x,y,255-finalValue);
+
                 }
             }
         }

@@ -7,12 +7,13 @@ import { Vector } from "./util/Vector";
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
-const CELLSIZE: number = 5;
+
+const CELLSIZE: number = 3;
 
 //optional
 //const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
 //const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
-const WIDTH:number = 800;
+const WIDTH:number = 900;
 const HEIGHT: number = 600;
 
 ctx.canvas.width = WIDTH;
@@ -29,6 +30,8 @@ var PLAYING: boolean = false;
 
 //TESTS ONLY
 var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),5);
+//var mazeGen: mazeGenerator = new mazeGenerator(180,120,10);
+
 console.log(mazeGen.size);
 mazeGen.generateMaze();
 mazeGen.generateWalls();
@@ -36,8 +39,8 @@ mazeGen.generateWalls();
 
 
 
-var lightValue = 8;
-var addState:boolean = true
+var lightValue = 3;
+var addState:boolean = true;
 
 lightSheet.setLight(new Vector(20,20),lightValue);
 lightSheet.setLight(new Vector(60,20),lightValue);
@@ -60,6 +63,7 @@ function main(time: number){
     requestAnimationFrame(main);
     return; // return as there is nothing to do
   }
+  
   lastFrameTime = time; // remember the time of the rendered frame
 
 
@@ -76,10 +80,10 @@ function main(time: number){
 
 
 
-    //  canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
 
-    //  lightSheet.setAllLightLuminanceValues(lightValue);
-    //  lightSheet.ditherAll(dither,2);
+     lightSheet.setAllLightLuminanceValues(lightValue);
+     lightSheet.ditherAll(dither,2);
     
     mazeGen.completeMazeRender(ctx);
     //mazeGen.render(ctx);
@@ -89,11 +93,12 @@ function main(time: number){
     // FRAME-RATE AND OTHER CALCULATIONS
     
     if(addState){
-      lightValue -= 0.4;
+      lightValue -= 0.1;
     }else{
-      lightValue += 0.4;
+      lightValue += 0.1;
     }
-    if(lightValue <= 6|| lightValue >= 9){
+    //6,9
+    if(lightValue <= 2|| lightValue >= 3){
       addState = !addState;
     }
 
