@@ -8,12 +8,12 @@ const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
 
 
-const CELLSIZE: number = 3;
+const CELLSIZE: number = 4;
 
 //optional
 //const WIDTH: number = window.innerWidth - (window.innerWidth % CELLSIZE);
 //const HEIGHT: number = window.innerHeight - (window.innerHeight % CELLSIZE);
-const WIDTH:number = 900;
+const WIDTH:number = 1000;
 const HEIGHT: number = 600;
 
 ctx.canvas.width = WIDTH;
@@ -29,7 +29,17 @@ var dither: Dither = new Dither();
 var PLAYING: boolean = false;
 
 //TESTS ONLY
-var mazeGen: mazeGenerator = new mazeGenerator(canvas.getCanvasColumns(),canvas.getCanvasRows(),5);
+var mazeGen: mazeGenerator = new mazeGenerator(
+  (canvas.getCanvasColumns()/6)*5,
+  (canvas.getCanvasRows()/9)*8,
+  8
+);
+// var mazeGen: mazeGenerator = new mazeGenerator(
+//   (canvas.getCanvasColumns()/10)*9,
+//   (canvas.getCanvasRows()/10)*9,
+//   10
+// );
+//var mazeGen: mazeGenerator = new mazeGenerator(1000/5,800/5,5);
 //var mazeGen: mazeGenerator = new mazeGenerator(180,120,10);
 
 console.log(mazeGen.size);
