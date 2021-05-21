@@ -3,28 +3,28 @@ import {
 } from "../util/Cell";
 import { Color } from "../util/Color";
 import {
-    Vector
-} from "../util/Vector";
+    Vec2
+} from "../util/Vec2";
 
 export class mazeGenerator {
     maze: Array<Cell> ;
     generatedMaze: Array<Cell> ;
-    size: Vector;
-    mazeSize: Vector;
+    size: Vec2;
+    mazeSize: Vec2;
     cellSize: number;
 
     private generateMazeStep1: boolean = false;
 
     constructor(screenWidth: number, screenHeight: number, cellSize: number) {
         //init
-        this.size = new Vector(0, 0);
+        this.size = new Vec2(0, 0);
         this.cellSize = cellSize;
 
         this.determineMazeResolution(screenWidth, screenHeight, cellSize);
 
         this.maze = new Array<Cell> (this.size.getX() * this.size.getY());
 
-        this.mazeSize = new Vector((this.size.getX() / 2) - 1, (this.size.getY() / 2) - 1);
+        this.mazeSize = new Vec2((this.size.getX() / 2) - 1, (this.size.getY() / 2) - 1);
 
         //init generated maze
         this.generatedMaze = new Array<Cell> (
@@ -34,7 +34,7 @@ export class mazeGenerator {
         for (var y = 0; y<this.mazeSize.getY(); y++) {
             for (var x = 0; x<this.mazeSize.getX(); x++) {
                 this.generatedMaze[y * this.mazeSize.getX() + x] = new Cell(
-                    new Vector(x, y),
+                    new Vec2(x, y),
                     this.cellSize,
                     this.cellSize,
                     true
@@ -44,7 +44,7 @@ export class mazeGenerator {
         for (var y = 0; y<this.size.getY(); y++) {
             for (var x = 0; x<this.size.getX(); x++) {
                 this.maze[y * this.size.getX() + x] = new Cell(
-                    new Vector(x, y),
+                    new Vec2(x, y),
                     this.cellSize,
                     this.cellSize,
                     false,

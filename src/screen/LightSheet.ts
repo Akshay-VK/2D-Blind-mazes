@@ -1,5 +1,5 @@
 import { Light } from "../util/Light";
-import { Vector } from "../util/Vector";
+import { Vec2 } from "../util/Vec2";
 import { Canvas } from "./Canvas";
 import { Dither } from "./Dither";
 
@@ -28,7 +28,7 @@ export class LightSheet{
 
 
     //NOT GETTERS OR SETTERS 🤣
-    public setLight(vec: Vector,luminanceValue: number){
+    public setLight(vec: Vec2,luminanceValue: number){
         this.lights.push(new Light(vec,luminanceValue));
         this.lightCanvases.push(new Canvas(this.rows, this.columns, this.cellSize,0));
         this.calculateLightEffects();        

@@ -1,5 +1,5 @@
 //Vector class for ease of calcuations in the future 😎
-export class Vector{
+export class Vec2{
   private x: number;
   private y: number;
 
@@ -10,26 +10,26 @@ export class Vector{
   //simple add, subtract, multiply and division methods
 
   //➕
-  public add(vec: Vector): void{
+  public add(vec: Vec2): void{
     this.x += vec.x;
     this.y += vec.y;
 
   }
 
   //➖
-  public sub(vec: Vector): void{
+  public sub(vec: Vec2): void{
     this.x -= vec.x;
     this.y -= vec.y;
   }
 
   //✖
-  public mul(vec: Vector): void{
+  public mul(vec: Vec2): void{
     this.x *= vec.x;
     this.y *= vec.y;
   }
 
   //➗
-  public div(vec: Vector): void{
+  public div(vec: Vec2): void{
     this.x /= vec.x;
     this.y /= vec.y;
   }

@@ -1,12 +1,12 @@
-import { Vector } from "./Vector";
+import { Vec2 } from "./Vec2";
 
 export class Light{
-    private position: Vector;
+    private position: Vec2;
     private luminanceValue: number;
     private maxLuminanceValue: number;
     private minLuminanceValue: number;
     
-    constructor(position: Vector, luminanceValue: number){
+    constructor(position: Vec2, luminanceValue: number){
         this.position = position;
         this.minLuminanceValue = 0;
         this.maxLuminanceValue = 10;
@@ -21,7 +21,7 @@ export class Light{
     //GETTERS
 
     //POSITIONS
-    public getPosition(): Vector{
+    public getPosition(): Vec2{
         return this.position;
     }
     public getPositionX(): number{
@@ -49,7 +49,7 @@ export class Light{
     
 
     //SETTERS
-    public setPosition(vec: Vector){
+    public setPosition(vec: Vec2){
         this.position.setX(vec.getX());
         this.position.setY(vec.getY());        
     }

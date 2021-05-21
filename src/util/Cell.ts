@@ -1,9 +1,9 @@
 import { Canvas } from "../screen/Canvas";
 import { Color } from "./Color";
-import { Vector } from "./Vector";
+import { Vec2 } from "./Vec2";
 
 export class Cell{
-    private position: Vector;
+    private position: Vec2;
     width: number;
     height: number;
     hasBounds: boolean;
@@ -20,7 +20,7 @@ export class Cell{
     private color: Color;
 
     
-    constructor(position: Vector, width: number, height: number, hasBounds?: boolean, color?: Color, renderArray?: Array<Color>){
+    constructor(position: Vec2, width: number, height: number, hasBounds?: boolean, color?: Color, renderArray?: Array<Color>){
         //sset required params
         this.position = position;
         this.width = width;
@@ -148,7 +148,7 @@ export class Cell{
 
     //GETTERS
 
-    get pos(): Vector{
+    get pos(): Vec2{
         return this.position;
     }
 

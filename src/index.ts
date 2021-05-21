@@ -2,7 +2,7 @@ import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
 import { Canvas } from "./screen/Canvas";
 import { Dither } from "./screen/Dither";
 import { LightSheet } from "./screen/LightSheet";
-import { Vector } from "./util/Vector";
+import { Vec2 } from "./util/Vec2";
 //SETUP
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');
@@ -52,8 +52,8 @@ mazeGen.generateWalls();
 var lightValue = 3;
 var addState:boolean = true;
 
-lightSheet.setLight(new Vector(20,20),lightValue);
-lightSheet.setLight(new Vector(60,20),lightValue);
+lightSheet.setLight(new Vec2(20,20),lightValue);
+lightSheet.setLight(new Vec2(60,20),lightValue);
 //lightSheet.setLight(new Vector(40,40),lightValue);
 
 
