@@ -1,5 +1,5 @@
 import { Light } from "../util/Light";
-import { Vec2 } from "../util/Vec2";
+import { Vec2 } from "../util/Vectors/Vec2";
 import { Canvas } from "./Canvas";
 import { Dither } from "./Dither";
 

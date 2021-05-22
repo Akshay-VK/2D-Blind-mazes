@@ -1,4 +1,4 @@
-import { Vec2 } from "./Vec2";
+import { Vec2 } from "./Vectors/Vec2";
 
 export class Light{
     private position: Vec2;

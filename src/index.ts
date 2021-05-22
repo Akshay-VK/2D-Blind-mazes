@@ -2,7 +2,7 @@ import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
 import { Canvas } from "./screen/Canvas";
 import { Dither } from "./screen/Dither";
 import { LightSheet } from "./screen/LightSheet";
-import { Vec2 } from "./util/Vec2";
+import { Vec2 } from "./util/Vectors/Vec2";
 //SETUP
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
 const ctx: CanvasRenderingContext2D = MYCANVAS.getContext('2d');

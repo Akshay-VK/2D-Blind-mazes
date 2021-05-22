@@ -4,7 +4,7 @@ import {
 import { Color } from "../util/Color";
 import {
     Vec2
-} from "../util/Vec2";
+} from "../util/Vectors/Vec2";
 
 export class mazeGenerator {
     maze: Array<Cell> ;

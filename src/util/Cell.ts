@@ -1,6 +1,6 @@
 import { Canvas } from "../screen/Canvas";
 import { Color } from "./Color";
-import { Vec2 } from "./Vec2";
+import { Vec2 } from "./Vectors/Vec2";
 
 export class Cell{
     private position: Vec2;
