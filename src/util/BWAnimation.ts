@@ -1,4 +1,3 @@
-import { isJSDocThisTag } from "../../node_modules/typescript/lib/typescript";
 import { BWImage } from "./BWImage";
 import { Vec3 } from "./Vectors/Vec3";
 
@@ -27,7 +26,7 @@ export class BWAnimation{
 
     public renderFrame(ctx: CanvasRenderingContext2D, frame: number, unitSize: number){        
         if(this.doesFrameExist(frame)){
-            this.images[frame].render(ctx, unitSize);
+            this.images[frame].render(ctx, unitSize, 255);
         }
     }
 

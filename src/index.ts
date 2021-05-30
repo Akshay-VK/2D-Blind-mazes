@@ -1,7 +1,10 @@
 import { mazeGenerator } from "./mazeGeneration/mazeGenerator";
+import { Loader } from "./organizedCode/Loader";
 import { Canvas } from "./screen/Canvas";
 import { Dither } from "./screen/Dither";
 import { LightSheet } from "./screen/LightSheet";
+import { BWImage } from "./util/BWImage";
+import { BWAnimation } from "./util/BWAnimation"
 import { Vec2 } from "./util/Vectors/Vec2";
 //SETUP
 const MYCANVAS: HTMLCanvasElement = document.querySelector('canvas');
@@ -28,6 +31,9 @@ var dither: Dither = new Dither();
 
 var PLAYING: boolean = false;
 
+
+var spriteInitializer: Loader = new Loader();
+
 //TESTS ONLY
 var mazeGen: mazeGenerator = new mazeGenerator(
   (canvas.getCanvasColumns()/6)*5,
@@ -47,6 +53,7 @@ mazeGen.generateMaze();
 mazeGen.generateWalls();
 
 
+var spriteSheet: BWAnimation = spriteInitializer.rightWalkSpriteSheet;
 
 
 var lightValue = 3;
@@ -61,8 +68,11 @@ lightSheet.setLight(new Vec2(60,20),lightValue);
 PLAYING = true;
 
 
+var frame: number = 1;
+
+
 //SETTING FRAME-RATE CODE
-const FRAMES_PER_SECOND: number =15;  // Valid values are 60,30,20,15,10...
+const FRAMES_PER_SECOND: number =10;  // Valid values are 60,30,20,15,10...
 // set the mim time to render the next frame
 const FRAME_MIN_TIME: number = (1000/60) * (60 / FRAMES_PER_SECOND) - (1000/60) * 0.5;
 var lastFrameTime: number = 0;  // the last frame time
@@ -72,10 +82,8 @@ function main(time: number){
   if(time-lastFrameTime < FRAME_MIN_TIME){ //skip the frame if the call is too early
     requestAnimationFrame(main);
     return; // return as there is nothing to do
-  }
-  
+  }  
   lastFrameTime = time; // remember the time of the rendered frame
-
 
   if(PLAYING){
     //MAIN CODE HERE
@@ -90,15 +98,21 @@ function main(time: number){
 
 
 
-     canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+    //REQUIRED
 
-     lightSheet.setAllLightLuminanceValues(lightValue);
-     lightSheet.ditherAll(dither,2);
+    // canvas.lightCalculatedRender(lightSheet.getCanvases(),ctx);
+
+    // lightSheet.setAllLightLuminanceValues(lightValue);
+    // lightSheet.ditherAll(dither,2);
     
-    mazeGen.completeMazeRender(ctx);
+    // mazeGen.completeMazeRender(ctx);
+
+    //---------------------------------
     //mazeGen.render(ctx);
 
-
+    var index = frame % spriteSheet.length;
+    console.log(index,frame);
+    spriteSheet.renderFrame(ctx, index , 10);
 
     // FRAME-RATE AND OTHER CALCULATIONS
     
@@ -111,6 +125,11 @@ function main(time: number){
     if(lightValue <= 2|| lightValue >= 3){
       addState = !addState;
     }
+
+    if(frame % 100 == 0){
+      frame = 0;
+    }
+    frame++;
 
     requestAnimationFrame(main);
 
