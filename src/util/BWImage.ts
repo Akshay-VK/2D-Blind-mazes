@@ -43,15 +43,17 @@ export class BWImage{
             for(var x = 0; x < this.dimensions.getX(); x++){
                 var index: number = this.index(x,y);
 
-                if(alpha != undefined){
-                    //with alpha
-                    ctx.fillStyle = `rgba(${this.image[index]},${this.image[index]},${this.image[index]},${this.clamp(alpha)/255})`;
-                }else{
-                    //without alpha
-                    ctx.fillStyle = `rgba(${this.image[index]},${this.image[index]},${this.image[index]},1})`;
-                }
-
-                ctx.fillRect(x * unitSize, y * unitSize, unitSize, unitSize);
+		if(this.image[index] != 0){
+                    if(alpha != undefined && this.clamp(alpha)/255 != 0){
+                        //with alpha
+                        ctx.fillStyle = `rgba(${this.image[index]},${this.image[index]},${this.image[index]},${this.clamp(alpha)/255})`;
+                    }else{
+                        //without alpha
+                        ctx.fillStyle = `rgba(${this.image[index]},${this.image[index]},${this.image[index]},1)`;
+                    }
+    
+                    ctx.fillRect(x * unitSize, y * unitSize, unitSize, unitSize);
+		}
             }
         }
     }

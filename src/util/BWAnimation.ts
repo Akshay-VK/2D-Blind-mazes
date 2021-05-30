@@ -10,7 +10,7 @@ export class BWAnimation{
         this.images = new Array<BWImage>(frames);
 
         if(images != undefined){
-            if(this.doesFrameExist(images.length)){
+            if(this.doesFrameExist(images.length-1)){
                 images.forEach((val: BWImage, i: number) => {
                     this.images[i] = new BWImage(width, height, val.img);
                 })
@@ -31,7 +31,7 @@ export class BWAnimation{
     }
 
     private doesFrameExist(index: number): boolean{
-        if(index > 0 && index < this.dimensions.getZ()){
+        if(index >= 0 && index < this.dimensions.getZ()){
             return true;
         }else{
             throw new Error('Array length does not match with specified animation frames');

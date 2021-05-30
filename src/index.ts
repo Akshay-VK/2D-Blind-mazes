@@ -110,9 +110,9 @@ function main(time: number){
     //---------------------------------
     //mazeGen.render(ctx);
 
-    var index = frame % spriteSheet.length;
+    var index = frame % spriteSheet.frames;
     console.log(index,frame);
-    spriteSheet.renderFrame(ctx, index , 10);
+    spriteSheet.renderFrame(ctx, index , 2);
 
     // FRAME-RATE AND OTHER CALCULATIONS
     
