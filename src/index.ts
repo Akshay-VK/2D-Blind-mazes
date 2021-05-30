@@ -112,7 +112,7 @@ function main(time: number){
 
     var index = frame % spriteSheet.frames;
     console.log(index,frame);
-    spriteSheet.renderFrame(ctx, index , 2);
+    spriteSheet.renderFrame(ctx, index , 4);
 
     // FRAME-RATE AND OTHER CALCULATIONS
     
