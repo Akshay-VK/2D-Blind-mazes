@@ -16,7 +16,7 @@ export class AABB{
     public arrayCollidesCheck(dimA: Dim2,dims: Dim2[]): boolean{
 	var res = false;
 	for(var i = 0; i < dims.length; i++){
-	    res = this.collides(dimA, dims[i]) ? true : false;
+	    res = this.collides(dimA, dims[i]) ? true : res;
 	}
 	return res;
     }
