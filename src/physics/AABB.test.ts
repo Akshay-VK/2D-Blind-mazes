@@ -35,7 +35,7 @@ test('Testing AABB collisions for an array of objects with a object..', () => {
     
     var aabb: AABB = new AABB();
 
-    expect(aabb.collides(firstDim, [secDim, thirdDim])).toBe(true);
+    expect(aabb.arrayCollidesCheck(firstDim, [secDim, thirdDim])).toBe(true);
 });
 test('Testing AABB collisions for an array of non-colliding objects with a object..', () => {
     var firstVec: Vec2 = new Vec2(10,10);
@@ -48,5 +48,5 @@ test('Testing AABB collisions for an array of non-colliding objects with a objec
     
     var aabb: AABB = new AABB();
 
-    expect(aabb.collides(firstDim, [secDim, thirdDim])).toBe(true);
+    expect(aabb.arrayCollidesCheck(firstDim, [secDim, thirdDim])).toBe(true);
 });
