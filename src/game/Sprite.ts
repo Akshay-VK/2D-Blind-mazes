@@ -1,6 +1,6 @@
 import { Dim2 } from "../util/Vectors/Dim2";
 import { BWAnimation } from "../util/BWAnimation";
-import { Screen } from "../screen/Screen";
+import { Canvas } from "../screen/Canvas";
 import { GameObject } from "./GameObjcet";
 
 export class Sprite implements GameObject{
