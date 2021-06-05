@@ -17,7 +17,7 @@ export class Sprite implements GameObject{
    
  };
  applyToCanvas(cnv: Canvas): Canvas{
-   return new Canvas();
+   return undefined;
  };
  //_____________GETTERS_____________
  get Dimensions(){
