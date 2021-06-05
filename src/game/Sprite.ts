@@ -1,0 +1,29 @@
+import { Dim2 } from "../util/Vectors/Dim2";
+import { BWAnimation } from "../util/BWAnimation";
+import { Screen } from "../screen/Screen";
+import { GameObject } from "./GameObjcet";
+
+export class Sprite implements GameObject{
+ private dimensions: Dim2;
+ private renderImage: BWAnimation;
+ constructor (dim: Dim2, renderImage: BWAnimation){
+   this.dimensions = dim;
+   this.renderImage = renderImage;
+ }
+ update(): void{
+   
+ };
+ render(ctx: CanvasRenderingContext2D): void{
+   
+ };
+ applyToCanvas(cnv: Canvas): Canvas{
+   return new Canvas();
+ };
+ //_____________GETTERS_____________
+ get Dimensions(){
+   return this.dimensions;
+ }
+ get RenderImage(){
+   return this.renderImage;
+ }
+}
