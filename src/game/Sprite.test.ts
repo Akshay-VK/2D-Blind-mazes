@@ -26,7 +26,7 @@ test('Testing Sprite dimensions and collisions',()=>{
       10,
       10
     ),
-    loader.rightWalkSpriteSheet
+    loader.rightWalkSpriteSheet 
   );
   expect(spriteA.Dimensions).toEqual(new Dim2(
       new Vec2(10, 10),
