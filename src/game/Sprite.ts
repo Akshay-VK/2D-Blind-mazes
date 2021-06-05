@@ -4,8 +4,8 @@ import { Canvas } from "../screen/Canvas";
 import { GameObject } from "./GameObject";
 
 export class Sprite implements GameObject{
- private dimensions: Dim2;
- private renderImage: BWAnimation;
+ dimensions: Dim2;
+ renderImage: BWAnimation;
  constructor (dim: Dim2, renderImage: BWAnimation){
    this.dimensions = dim;
    this.renderImage = renderImage;

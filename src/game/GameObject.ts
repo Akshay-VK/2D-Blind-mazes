@@ -3,8 +3,8 @@ import { BWAnimation } from "../util/BWAnimation";
 import { Canvas } from "../screen/Canvas"
 
 export interface  GameObject{
-    private dimensions: Dim2;
-    private renderImage: BWAnimation;
+    dimensions: Dim2;
+    renderImage: BWAnimation;
     update(): void;
     render(ctx: CanvasRenderingContext2D): void;
     applyToCanvas(cnv: Canvas): Canvas;
