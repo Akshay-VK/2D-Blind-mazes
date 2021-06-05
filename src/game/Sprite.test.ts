@@ -2,7 +2,7 @@ import { Sprite } from "./Sprite";
 import { AABB } from "../physics/AABB";
 import { Vec2 } from "../util/Vectors/Vec2";
 import { Dim2 } from "../util/Vectors/Dim2";
-import { Loader } from "../organizedCode";
+import { Loader } from "../organizedCode/Loader";
 
 test('Testing Sprite renderImage', ()=>{
   var aabb = new AABB();
