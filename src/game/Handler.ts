@@ -16,8 +16,8 @@ export class Handler{
 	this.gameObjectGroups.push(grp);
     }
     public getGameObject(i: number): GameObject{
-    	if(this.exists(gameObjects,i)){
-		return gameObjects[i];
+    	if(this.exists(this.gameObjects,i)){
+		return this.gameObjects[i];
 	}else{
 		throw new Error(`GameObject query of index ${i} does not exist.`);
 	}
