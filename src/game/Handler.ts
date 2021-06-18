@@ -17,10 +17,17 @@ export class Handler{
     }
     public getGameObject(i: number): GameObject{
     	if(this.exists(this.gameObjects,i)){
-		return this.gameObjects[i];
-	}else{
-		throw new Error(`GameObject query of index ${i} does not exist.`);
-	}
+            return this.gameObjects[i];
+        }else{
+            throw new Error(`GameObject query of index ${i} does not exist.`);
+        }
+    }
+    public getGameObject(i: number): GameObject{
+    	if(this.exists(this.gameObjectGroups,i)){
+            return this.gameObjectGroups[i];
+        }else{
+            throw new Error(`GameObjectGroup query of index ${i} does not exist.`);
+        }
     }
 
     private exists(arr: GameObject[] | GameObjectGroup[], i: number): boolean{

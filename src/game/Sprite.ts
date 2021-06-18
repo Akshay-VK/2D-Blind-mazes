@@ -13,17 +13,17 @@ export class Sprite implements GameObject{
  update(): void{
    
  };
- render(ctx: CanvasRenderingContext2D): void{
-   
+ render(ctx: CanvasRenderingContext2D, frame: number, unitSize): void{
+   this.renderImage.renderFrame(ctx, frame, unitSize);
  };
  applyToCanvas(cnv: Canvas): Canvas{
    return undefined;
  };
  //_____________GETTERS_____________
- get Dimensions(){
+ get Dimensions(): Dim2{
    return this.dimensions;
  }
- get RenderImage(){
+ get RenderImage(): BWAnimation{
    return this.renderImage;
  }
 }
