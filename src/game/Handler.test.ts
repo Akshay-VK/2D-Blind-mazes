@@ -1,5 +1,5 @@
 import { Sprite } from "./Sprite";
-import { GameObjectGroup } from "./GameObejctGroup";
+import { GameObjectGroup } from "./GameObjectGroup";
 import { Loader } from "../organizedCode/Loader";
 
 test('Handler test...',()=>{

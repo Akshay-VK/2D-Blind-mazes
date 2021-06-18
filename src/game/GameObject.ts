@@ -6,6 +6,6 @@ export interface  GameObject{
     dimensions: Dim2;
     renderImage: BWAnimation;
     update(): void;
-    render(ctx: CanvasRenderingContext2D): void;
+    render(ctx: CanvasRenderingContext2D, frame: number, unitSize: number): void;
     applyToCanvas(cnv: Canvas): Canvas;
 }
