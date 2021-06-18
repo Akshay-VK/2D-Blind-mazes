@@ -22,7 +22,7 @@ export class Handler{
             throw new Error(`GameObject query of index ${i} does not exist.`);
         }
     }
-    public getGameObject(i: number): GameObject{
+    public getGameObjectGroup(i: number): GameObjectGroup{
     	if(this.exists(this.gameObjectGroups,i)){
             return this.gameObjectGroups[i];
         }else{
@@ -30,7 +30,7 @@ export class Handler{
         }
     }
 
-    private exists(arr: GameObject[] | GameObjectGroup[], i: number): boolean{
+    private exists(arr: any[], i: number): boolean{
     	return i >= 0 && i < arr.length;
     }
 

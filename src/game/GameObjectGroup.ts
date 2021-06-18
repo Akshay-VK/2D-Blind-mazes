@@ -12,7 +12,7 @@ export class GameObjectGroup{
     if(this.itemExists(i)){
       return this.items[i];
     }else{
-      return new Error("Get item call index in GameObjectGroup exceeds items length");
+      throw new Error("Get item call index in GameObjectGroup exceeds items length");
     }
   }
 
@@ -21,9 +21,9 @@ export class GameObjectGroup{
       this.items[i].update();
     }
   }
-  public render(ctx: CanvasRenderingContext2D){
+  public render(ctx: CanvasRenderingContext2D, frame: number, unitSize: number){
     for(var i = 0; i < this.items.length; i++){
-      this.items[i].render(ctx);
+      this.items[i].render(ctx, frame, unitSize);
     }
   }
 
